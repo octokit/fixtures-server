@@ -9,6 +9,9 @@ const globTofixtures = require('../lib/glob-to-fixtures')
 
 const DEFAULTS = require('../lib/defaults')
 
+// NOW_URL: support deployment to now.sh: https://zeit.co/docs/features/env-and-secrets
+const defaultFixtureUrl = process.env.NOW_URL || process.env.FIXTURES_URL || DEFAULTS.fixturesUrl
+
 const { argv } = yargs.options({
   port: {
     type: 'number',
@@ -16,7 +19,7 @@ const { argv } = yargs.options({
   },
   'fixtures-url': {
     type: 'string',
-    default: parseInt(process.env.FIXTURES_URL || DEFAULTS.fixturesUrl, 10)
+    default: defaultFixtureUrl
   },
   'log-level': {
     type: 'string',
