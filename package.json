@@ -72,5 +72,11 @@
   },
   "pkg": {
     "scripts": "node_modules/@octokit/fixtures/scenarios/**/*.json"
+  },
+  "now": {
+    "alias": "octokit-fixtures",
+    "env": {
+      "NODE_ENV": "production"
+    }
   }
 }
