@@ -16,8 +16,32 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixture).
 
 ## Usage
 
-You can use `@octokit/fixtures-server` as [standalone server](#standaloneserver)
-or as [express middleware](#expressmiddleware).
+1. Load a fixture. All folder names at [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/master/scenarios/api.github.com/)
+   are valid values for `scenario`.
+
+   ```
+   curl -XPOST -H'Content-Type: application/json' https://fixtures-server.now.sh/fixtures -d '{"scenario": "get-repository"}'
+   ```
+
+   The response looks something like this
+
+   ```json
+   {
+     "id":"123",
+     "url":"https://octokitfixtures-server-abc.now.sh/api.github.com"
+   }
+   ```
+
+2. Send a request to the returned `url` as if it was https://api.github.com. Make sure to pass the returned `id` as `X-Fixtures-Id` header
+
+   ```
+   curl -H'Accept: application/vnd.github.v3+json' -H'X-Fixtures-Id: 123' https://octokitfixtures-server-abc.now.sh/api.github.com/api.github.com/repos/octokit-fixture-org/hello-world
+   ```
+
+After that request the fixture is "consumed". That allows for different responses for the same requests based on order.
+
+If you want to load custom fixtures, you'll have to use `@octokit/fixtures-server` as [standalone server](#standaloneserver)
+or as as [express middleware](#expressmiddleware).
 
 ### Standalone Server
 
@@ -27,25 +51,15 @@ Alternatively, you can also install `@octokit/fixtures-server` as a global npm p
 
 ```
 npm install --global @octokit/fixtures-server
+```
+
+By default the server runs at http://localhost:3000
+
+```
 octokit-fixtures-server
 ```
 
-By default it loads all mocks from [`@octokit/fixtures/scenarios/api.github.com/*/normalized-fixture.json`](http://github.com/octokit/fixtures/tree/master/scenarios/api.github.com/).
-Once started you can load a fixture with a `POST /fixtures` request with the scenario name in the request body, e.g. `get-repository`
-
-```
-curl -XPOST -H'Content-Type: application/json' http://localhost:3000/fixtures -d '{"scenario": "get-repository"}'
-{"id":"123","url":"http://localhost:3000/api.github.com"}
-```
-
-Then send a request to the returned `url` as if it was https://api.github.com. Make sure to pass the returned `id` as `X-Fixtures-Id` header
-
-```
-curl -H'Accept: application/vnd.github.v3+json' -H'X-Fixtures-Id: 123' http://localhost:3000/api.github.com/repos/octokit-fixture-org/hello-world
-# returns response from fixture
-```
-
-After that request the fixture is "consumed". That allows for scenarios where the same request returns different responses based on order of requests.
+From here it's the same usage as shown above, only with `http://localhost:3000` instead of `https://fixtures-server.now.sh`
 
 <a name="standalone-server-options"></a>
 #### Options
