@@ -24,6 +24,10 @@ jobs:
     - stage: release
       node_js: lts/*
       env: COMMAND=semantic-release
+      deploy:
+        script: scripts/deploy.sh
+        provider: script
+        skip_cleanup: true
   allow_failures:
     - node_js: lts/*
       env: COMMAND=coverage:upload
