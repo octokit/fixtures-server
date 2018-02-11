@@ -19,7 +19,7 @@ jobs:
     - stage: lint
       env: COMMAND=pretest
     - stage: test
-    - env: COMMAND=test
+      env: COMMAND=test
     - env: COMMAND=test:e2e
     - stage: release
       node_js: lts/*
