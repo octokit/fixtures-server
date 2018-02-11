@@ -1,0 +1,76 @@
+{
+  "name": "@octokit/fixtures-server",
+  "version": "0.0.0-development",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Fixtures server for browser & language agnositic octokit testing",
+  "main": "index.js",
+  "bin": {
+    "octokit-fixtures-server": "bin/server.js"
+  },
+  "files": [
+    "index.js",
+    "bin",
+    "lib"
+  ],
+  "scripts": {
+    "coverage": "tap --coverage-report=html",
+    "coverage:upload": "npm run test && tap --coverage-report=text-lcov | coveralls",
+    "start": "node bin/server.js",
+    "pretest": "standard",
+    "test": "tap --100 --coverage 'test/**/*-test.js'",
+    "test:e2e": "npm run test:e2e:smoke && npm run test:e2e:custom-fixtures",
+    "test:e2e:smoke": "test/end-to-end/smoke-test.sh",
+    "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh",
+    "presemantic-release": "pkg . --out-path=dist/",
+    "semantic-release": "semantic-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octokit/fixtures-server.git"
+  },
+  "keywords": [],
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/octokit/fixtures-server/issues"
+  },
+  "homepage": "https://github.com/octokit/fixtures-server#readme",
+  "dependencies": {
+    "@octokit/fixtures": "^7.0.1",
+    "cachimo": "^1.0.2",
+    "console-log-level": "^1.4.0",
+    "cors": "^2.8.4",
+    "express": "^4.15.4",
+    "glob": "^7.1.2",
+    "http-proxy-middleware": "^0.17.4",
+    "lodash": "^4.17.4",
+    "resolve-pkg": "^1.0.0",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {
+    "axios": "^0.17.0",
+    "coveralls": "^3.0.0",
+    "pkg": "^4.3.0",
+    "proxyquire": "^1.8.0",
+    "semantic-release": "^12.4.1",
+    "standard": "^10.0.3",
+    "supertest": "^3.0.0",
+    "tap": "^11.0.0"
+  },
+  "release": {
+    "publish": [
+      "@semantic-release/npm",
+      {
+        "path": "@semantic-release/github",
+        "assets": [
+          "dist/*"
+        ]
+      }
+    ]
+  },
+  "pkg": {
+    "scripts": "node_modules/@octokit/fixtures/scenarios/**/*.json"
+  }
+}
