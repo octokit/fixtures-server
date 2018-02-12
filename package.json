@@ -46,7 +46,6 @@
     "glob": "^7.1.2",
     "http-proxy-middleware": "^0.17.4",
     "lodash": "^4.17.4",
-    "resolve-pkg": "^1.0.0",
     "yargs": "^11.0.0"
   },
   "devDependencies": {
