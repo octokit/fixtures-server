@@ -1,12 +1,13 @@
 #!/bin/sh
 
-now="npx now --token=$NOW_TOKEN"
+# https://github.com/zeit/now-cli/issues/817
+now="npx now --debug --token=$NOW_TOKEN"
 
-# delete deployments that are currently not aliased
-$now rm --safe --yes octokit-fixtures
-
-# deploy
+echo "$ now --public"
 $now --public
 
-# set alias
+echo "$ now alias"
 $now alias
+
+echo "$ now rm --safe --yes wip-bot"
+$now rm --safe --yes octokit-fixtures
