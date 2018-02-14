@@ -17,7 +17,7 @@ test('create fixture success', t => {
     .then(response => {
       const {id, url} = response.body
       t.ok(id)
-      t.is(url, 'http://localhost:3000/api.github.com')
+      t.is(url, `http://localhost:3000/api.github.com/${id}`)
       t.end()
     })
     .catch(t.error)
@@ -55,7 +55,7 @@ test('create fixture with custom url', t => {
     .then(response => {
       const {id, url} = response.body
       t.ok(id)
-      t.is(url, 'https://deployment-123.my-fixtures.com/api.github.com')
+      t.is(url, `https://deployment-123.my-fixtures.com/api.github.com/${id}`)
       t.end()
     })
     .catch(t.error)

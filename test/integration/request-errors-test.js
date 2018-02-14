@@ -1,3 +1,5 @@
+const parseUrl = require('url').parse
+
 const express = require('express')
 const supertest = require('supertest')
 const {test} = require('tap')
@@ -12,16 +14,15 @@ test('request error: no matching fixture found', async t => {
   }))
 
   const agent = supertest(app)
-  const {body: {id}} = await agent
+  const {body: {url}} = await agent
     .post('/fixtures')
     .send({scenario: 'create-file'})
 
   const {status, body} = await agent
-    .put('/api.github.com/repos/octokit-fixture-org/create-file/contents/test.txt')
+    .put(`${parseUrl(url).path}/repos/octokit-fixture-org/create-file/contents/test.txt`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      Authorization: `token 0000000000000000000000000000000000000001`,
-      'x-fixtures-id': id
+      Authorization: `token 0000000000000000000000000000000000000001`
     })
     .send({
       message: 'wrong message',

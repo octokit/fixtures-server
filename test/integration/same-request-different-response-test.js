@@ -28,11 +28,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
   const addCollaboratorResponse = await agent
-    .put('/api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b')
+    .put(`/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
@@ -40,11 +39,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/invitations/
   const getInvitationsResponse = await agent
-    .get('/api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations')
+    .get(`/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
@@ -53,11 +51,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
   const acceptInvitationResponse = await agent
-    .patch('/api.github.com/user/repository_invitations/1000')
+    .patch(`/api.github.com/${id}/user/repository_invitations/1000`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000002',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000002'
     })
     .catch(t.error)
 
@@ -65,11 +62,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators1Response = await agent
-    .get('/api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators')
+    .get(`/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
@@ -79,11 +75,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
   const removeCollaboratorResponse = await agent
-    .delete('/api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b')
+    .delete(`/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
@@ -91,11 +86,10 @@ test('add-and-remove-repository-collaborator (same request/different response)',
 
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators2Response = await agent
-    .get('/api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators')
+    .get(`/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 

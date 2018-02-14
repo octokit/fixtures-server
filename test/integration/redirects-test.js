@@ -1,3 +1,5 @@
+const parseUrl = require('url').parse
+
 const express = require('express')
 const supertest = require('supertest')
 const {test} = require('tap')
@@ -5,7 +7,7 @@ const {test} = require('tap')
 const {getScenarioFixture} = require('../util')
 const middleware = require('../..')
 
-test('get repository success (redirect URL test)', async t => {
+test('get repository redirect (gr2m/octokit-rest-browser-experimental#6)', async t => {
   const app = express()
   app.use(middleware({
     logLevel: 'error',
@@ -22,15 +24,14 @@ test('get repository success (redirect URL test)', async t => {
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
-  const {id} = fixtureResponse.body
+  const path = parseUrl(fixtureResponse.body.url).path
 
   const renameResponse = await agent
-    .patch('/api.github.com/repos/octokit-fixture-org/rename-repository')
+    .patch(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001',
-      'content-type': 'application/json; charset=utf-8',
-      'x-fixtures-id': id
+      'content-type': 'application/json; charset=utf-8'
     })
     .send({
       name: 'rename-repository-newname'
@@ -40,16 +41,15 @@ test('get repository success (redirect URL test)', async t => {
   t.is(renameResponse.status, 200, renameResponse.body.detail || renameResponse.body.error)
 
   const getResponse = await agent
-    .get('/api.github.com/repos/octokit-fixture-org/rename-repository')
+    .get(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
   t.is(getResponse.status, 301, getResponse.body.detail || getResponse.body.error)
-  t.is(getResponse.headers.location, 'http://localhost:3000/api.github.com/repositories/1000', 'redirect URL is prefixed correctly')
+  t.is(getResponse.headers.location, `http://localhost:3000${path}/repositories/1000`, 'redirect URL is prefixed correctly')
 
   t.end()
 })
@@ -72,15 +72,14 @@ test('get repository success (redirect with custom URL test)', async t => {
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
-  const {id} = fixtureResponse.body
+  const path = parseUrl(fixtureResponse.body.url).path
 
   const renameResponse = await agent
-    .patch('/api.github.com/repos/octokit-fixture-org/rename-repository')
+    .patch(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001',
-      'content-type': 'application/json; charset=utf-8',
-      'x-fixtures-id': id
+      'content-type': 'application/json; charset=utf-8'
     })
     .send({
       name: 'rename-repository-newname'
@@ -90,16 +89,15 @@ test('get repository success (redirect with custom URL test)', async t => {
   t.is(renameResponse.status, 200, renameResponse.body.detail || renameResponse.body.error)
 
   const getResponse = await agent
-    .get('/api.github.com/repos/octokit-fixture-org/rename-repository')
+    .get(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      authorization: 'token 0000000000000000000000000000000000000001',
-      'x-fixtures-id': id
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
     .catch(t.error)
 
   t.is(getResponse.status, 301, getResponse.body.detail || getResponse.body.error)
-  t.is(getResponse.headers.location, 'https://deployment123.my-mock-server.com/api.github.com/repositories/1000', 'redirect URL is prefixed correctly')
+  t.is(getResponse.headers.location, `https://deployment123.my-mock-server.com${path}/repositories/1000`, 'redirect URL is prefixed correctly')
 
   t.end()
 })
