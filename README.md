@@ -28,15 +28,15 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixture).
 
    ```json
    {
-     "id":"123",
-     "url":"https://octokitfixtures-server-abc.now.sh/api.github.com"
+     "id":"fixturesid123",
+     "url":"https://octokitfixtures-server-abc.now.sh/api.github.com/fixturesid123"
    }
    ```
 
-2. Send a request to the returned `url` as if it was https://api.github.com. Make sure to pass the returned `id` as `X-Fixtures-Id` header
+2. Send a request to the returned `url` as if it was https://api.github.com.
 
    ```
-   curl -H'Accept: application/vnd.github.v3+json' -H'X-Fixtures-Id: 123' https://octokitfixtures-server-abc.now.sh/api.github.com/api.github.com/repos/octokit-fixture-org/hello-world
+   curl -H'Accept: application/vnd.github.v3+json' https://octokitfixtures-server-abc.now.sh/api.github.com/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world
    ```
 
 After that request the fixture is "consumed". That allows for different responses for the same requests based on order.
