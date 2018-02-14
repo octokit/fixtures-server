@@ -48,7 +48,7 @@ function fixtureServereMiddleware (options) {
 
     response.status(201).json({
       id,
-      url: urlResolve(state.fixturesUrl, urlParse(requestedFixture[0].scope).hostname)
+      url: urlResolve(state.fixturesUrl, urlParse(requestedFixture[0].scope).hostname + '/' + id)
     })
   })
 
