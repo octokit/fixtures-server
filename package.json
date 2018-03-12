@@ -44,7 +44,7 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "glob": "^7.1.2",
-    "http-proxy-middleware": "^0.17.4",
+    "http-proxy-middleware": "^0.18.0",
     "lodash": "^4.17.4",
     "yargs": "^11.0.0"
   },
