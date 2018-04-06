@@ -8,7 +8,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/octokit/fixtures-server.svg)](https://greenkeeper.io/)
 
 The Octokit Fixtures Server is proxies requests to the mocked routes
-provided by [@octokit/fixtures](https://github.com/octokit/fixture).
+provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
 
 - [Usage](#usage)
 - [How it works](HOW_IT_WORKS.md)
