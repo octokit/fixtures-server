@@ -56,7 +56,7 @@
     "semantic-release": "^15.0.0",
     "standard": "^10.0.3",
     "supertest": "^3.0.0",
-    "tap": "^11.0.0"
+    "tap": "^12.0.0"
   },
   "release": {
     "publish": [
