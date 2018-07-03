@@ -19,14 +19,14 @@ test('release asset (gr2m/octokit-rest-browser-experimental#5)', async t => {
   const {body: {id: fixtureId}} = await agent
     .post('/fixtures')
     .send({scenario: 'release-assets'})
-  const {body: {upload_url}} = await agent
+  const {body: {upload_url: updateUrl}} = await agent
     .get(`/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
 
-  t.is(upload_url, `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`)
+  t.is(updateUrl, `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`)
 
   const result = await agent
     .post(`/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets`)
