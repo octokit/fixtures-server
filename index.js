@@ -1,6 +1,6 @@
 module.exports = fixtureServereMiddleware
 
-const {parse: urlParse, resolve: urlResolve} = require('url')
+const { parse: urlParse, resolve: urlResolve } = require('url')
 
 const _ = require('lodash')
 const bodyParser = require('body-parser')
@@ -24,7 +24,7 @@ function fixtureServereMiddleware (options) {
   }
 
   state.cachimo = cachimo
-  state.log = Log({level: state.logLevel === 'silent' ? 'fatal' : state.logLevel})
+  state.log = Log({ level: state.logLevel === 'silent' ? 'fatal' : state.logLevel })
 
   middleware.post('/fixtures', bodyParser.json(), (request, response) => {
     const id = Math.random().toString(36).substr(2)
@@ -36,7 +36,7 @@ function fixtureServereMiddleware (options) {
       })
     }
 
-    const mock = fixtures.mock(requestedFixture, fixture => additions(state, {id, fixture}))
+    const mock = fixtures.mock(requestedFixture, fixture => additions(state, { id, fixture }))
 
     cachimo
       .put(id, mock, state.ttl)
@@ -60,7 +60,7 @@ function fixtureServereMiddleware (options) {
     .uniq()
     // remove default ports for http / https, they cause problems for the proxy
     .map(url => url.replace(/:(80|443)$/, ''))
-    .forEach(target => middleware.use(proxy(state, {target})))
+    .forEach(target => middleware.use(proxy(state, { target })))
     .value()
 
   return middleware

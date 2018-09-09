@@ -1,5 +1,5 @@
 const proxyquire = require('proxyquire').noCallThru()
-const {test} = require('tap')
+const { test } = require('tap')
 
 test('globToFixture globbing JSON file != normalized-fixture.json', t => {
   const globToFixture = proxyquire('../../lib/glob-to-fixtures', {
@@ -9,7 +9,7 @@ test('globToFixture globbing JSON file != normalized-fixture.json', t => {
     '/foo/bar.json': 'baz'
   })
   const fixtures = globToFixture()
-  t.deepEqual(fixtures, {bar: 'baz'})
+  t.deepEqual(fixtures, { bar: 'baz' })
 
   t.end()
 })

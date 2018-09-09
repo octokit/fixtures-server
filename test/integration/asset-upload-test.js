@@ -1,8 +1,8 @@
 const express = require('express')
 const supertest = require('supertest')
-const {test} = require('tap')
+const { test } = require('tap')
 
-const {getScenarioFixture} = require('../util')
+const { getScenarioFixture } = require('../util')
 const middleware = require('../..')
 
 test('release asset (gr2m/octokit-rest-browser-experimental#5)', async t => {
@@ -16,10 +16,10 @@ test('release asset (gr2m/octokit-rest-browser-experimental#5)', async t => {
   }))
 
   const agent = supertest(app)
-  const {body: {id: fixtureId}} = await agent
+  const { body: { id: fixtureId } } = await agent
     .post('/fixtures')
-    .send({scenario: 'release-assets'})
-  const {body: {upload_url: updateUrl}} = await agent
+    .send({ scenario: 'release-assets' })
+  const { body: { upload_url: updateUrl } } = await agent
     .get(`/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`)
     .set({
       accept: 'application/vnd.github.v3+json',

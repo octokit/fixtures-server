@@ -41,7 +41,7 @@ const { argv } = yargs.options({
 const app = express()
 app.use(cors())
 app.get('/ping', (request, response) => {
-  response.json({ok: true})
+  response.json({ ok: true })
 })
 app.use(fixtureServereMiddleware({
   port: argv.port,

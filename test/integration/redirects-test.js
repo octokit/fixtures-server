@@ -2,9 +2,9 @@ const parseUrl = require('url').parse
 
 const express = require('express')
 const supertest = require('supertest')
-const {test} = require('tap')
+const { test } = require('tap')
 
-const {getScenarioFixture} = require('../util')
+const { getScenarioFixture } = require('../util')
 const middleware = require('../..')
 
 test('get repository redirect (gr2m/octokit-rest-browser-experimental#6)', async t => {
@@ -20,7 +20,7 @@ test('get repository redirect (gr2m/octokit-rest-browser-experimental#6)', async
   const agent = supertest(app)
   const fixtureResponse = await agent
     .post('/fixtures')
-    .send({scenario: 'rename-repository'})
+    .send({ scenario: 'rename-repository' })
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
@@ -68,7 +68,7 @@ test('get repository success (redirect with custom URL test)', async t => {
   const agent = supertest(app)
   const fixtureResponse = await agent
     .post('/fixtures')
-    .send({scenario: 'rename-repository'})
+    .send({ scenario: 'rename-repository' })
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)

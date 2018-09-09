@@ -1,4 +1,4 @@
-const {test} = require('tap')
+const { test } = require('tap')
 const mapValuesDeep = require('../../lib/map-values-deep')
 
 test('mapValuesDeep leaves arrays intact (#5)', t => {

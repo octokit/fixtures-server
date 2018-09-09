@@ -1,8 +1,8 @@
 const express = require('express')
 const supertest = require('supertest')
-const {test} = require('tap')
+const { test } = require('tap')
 
-const {getScenarioFixture} = require('../util')
+const { getScenarioFixture } = require('../util')
 const middleware = require('../..')
 
 // Two GET /api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators
@@ -20,11 +20,11 @@ test('add-and-remove-repository-collaborator (same request/different response)',
   const agent = supertest(app)
   const fixtureResponse = await agent
     .post('/fixtures')
-    .send({scenario: 'add-and-remove-repository-collaborator'})
+    .send({ scenario: 'add-and-remove-repository-collaborator' })
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
-  const {id} = fixtureResponse.body
+  const { id } = fixtureResponse.body
 
   // https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
   const addCollaboratorResponse = await agent

@@ -2,9 +2,9 @@ const parseUrl = require('url').parse
 
 const express = require('express')
 const supertest = require('supertest')
-const {test} = require('tap')
+const { test } = require('tap')
 
-const {getScenarioFixture} = require('../util')
+const { getScenarioFixture } = require('../util')
 const middleware = require('../..')
 
 test('get repository success', async t => {
@@ -18,11 +18,11 @@ test('get repository success', async t => {
   }))
 
   const agent = supertest(app)
-  const {body: {url}} = await agent
+  const { body: { url } } = await agent
     .post('/fixtures')
-    .send({scenario: 'get-repository'})
+    .send({ scenario: 'get-repository' })
 
-  const {body} = await agent
+  const { body } = await agent
     .get(`${parseUrl(url).path}/repos/octokit-fixture-org/hello-world`)
     .set({
       accept: 'application/vnd.github.v3+json'
@@ -43,7 +43,7 @@ test('get repository without Accept header', async t => {
   }))
 
   const agent = supertest(app)
-  const {status, body} = await agent
+  const { status, body } = await agent
     .get('/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world')
 
   t.is(status, 400)
@@ -62,7 +62,7 @@ test('get repository with invalid X-Fixtures-Id header', async t => {
   }))
 
   const agent = supertest(app)
-  const {status, body} = await agent
+  const { status, body } = await agent
     .get('/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world')
     .set({
       accept: 'application/vnd.github.v3+json'
@@ -84,11 +84,11 @@ test('get repository with incorrect path', async t => {
   }))
 
   const agent = supertest(app)
-  const {body: {url}} = await agent
+  const { body: { url } } = await agent
     .post('/fixtures')
-    .send({scenario: 'get-repository'})
+    .send({ scenario: 'get-repository' })
 
-  const {status, body} = await agent
+  const { status, body } = await agent
     .get(`${parseUrl(url).path}/foo`)
     .set({
       accept: 'application/vnd.github.v3+json'

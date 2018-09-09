@@ -1,8 +1,8 @@
 const express = require('express')
 const supertest = require('supertest')
-const {test} = require('tap')
+const { test } = require('tap')
 
-const {getScenarioFixture} = require('../util')
+const { getScenarioFixture } = require('../util')
 const middleware = require('../..')
 
 test('conflicts test (#8)', async t => {
@@ -20,11 +20,11 @@ test('conflicts test (#8)', async t => {
   // intentionally load same fixture twice
   await agent
     .post('/fixtures')
-    .send({scenario: 'release-assets'})
-  const {body: {id: fixtureId}} = await agent
+    .send({ scenario: 'release-assets' })
+  const { body: { id: fixtureId } } = await agent
     .post('/fixtures')
-    .send({scenario: 'release-assets'})
-  const {body: {upload_url: uploadUrl}} = await agent
+    .send({ scenario: 'release-assets' })
+  const { body: { upload_url: uploadUrl } } = await agent
     .get(`/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`)
     .set({
       accept: 'application/vnd.github.v3+json',
