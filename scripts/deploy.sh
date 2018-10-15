@@ -9,5 +9,5 @@ $now --public
 echo "$ now alias"
 $now alias
 
-echo "$ now rm --safe --yes wip-bot"
+echo "$ now rm --safe --yes octokit-fixtures"
 $now rm --safe --yes octokit-fixtures
