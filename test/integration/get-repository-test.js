@@ -25,7 +25,8 @@ test('get repository success', async t => {
   const { body } = await agent
     .get(`${parseUrl(url).path}/repos/octokit-fixture-org/hello-world`)
     .set({
-      accept: 'application/vnd.github.v3+json'
+      accept: 'application/vnd.github.v3+json',
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
 
   t.is(body.name, 'hello-world')
@@ -65,7 +66,8 @@ test('get repository with invalid X-Fixtures-Id header', async t => {
   const { status, body } = await agent
     .get('/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world')
     .set({
-      accept: 'application/vnd.github.v3+json'
+      accept: 'application/vnd.github.v3+json',
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
 
   t.is(status, 404)
@@ -91,7 +93,8 @@ test('get repository with incorrect path', async t => {
   const { status, body } = await agent
     .get(`${parseUrl(url).path}/foo`)
     .set({
-      accept: 'application/vnd.github.v3+json'
+      accept: 'application/vnd.github.v3+json',
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
 
   t.is(status, 404)

@@ -25,7 +25,8 @@ test('binary response (octokit/rest.js#743)', async t => {
   const getArchiveResponse = await agent
     .get(`/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/master`)
     .set({
-      accept: 'application/vnd.github.v3+json'
+      accept: 'application/vnd.github.v3+json',
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
 
   t.is(getArchiveResponse.status, 302)
@@ -36,7 +37,8 @@ test('binary response (octokit/rest.js#743)', async t => {
   const { status } = await agent
     .get(path)
     .set({
-      accept: 'application/vnd.github.v3+json'
+      accept: 'application/vnd.github.v3+json',
+      authorization: 'token 0000000000000000000000000000000000000001'
     })
 
   t.is(status, 200)
