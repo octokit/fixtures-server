@@ -21,7 +21,7 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
    are valid values for `scenario`.
 
    ```
-   curl -XPOST -H'Content-Type: application/json' https://fixtures-server.now.sh/fixtures -d '{"scenario": "get-repository"}'
+   curl -XPOST -H'Content-Type: application/json' https://octokit-fixtures.now.sh/fixtures -d '{"scenario": "get-repository"}'
    ```
 
    The response looks something like this
