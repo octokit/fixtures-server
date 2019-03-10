@@ -33,6 +33,7 @@ test('create fixture error', t => {
   supertest(app)
     .post('/fixtures')
     .send({ scenario: 'nope' })
+    .catch((error) => error.response)
     .then((response) => {
       t.is(response.status, 400)
       t.is(response.body.error, 'Scenario "nope" not found')
