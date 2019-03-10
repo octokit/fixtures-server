@@ -46,6 +46,7 @@ test('get repository without Accept header', async t => {
   const agent = supertest(app)
   const { status, body } = await agent
     .get('/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world')
+    .catch((error) => error.response)
 
   t.is(status, 400)
   t.is(body.error, 'Accept header required')
@@ -69,6 +70,7 @@ test('get repository with invalid X-Fixtures-Id header', async t => {
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
+    .catch((error) => error.response)
 
   t.is(status, 404)
   t.is(body.error, 'Fixture "fixturesid123" not found')
@@ -96,6 +98,7 @@ test('get repository with incorrect path', async t => {
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
+    .catch((error) => error.response)
 
   t.is(status, 404)
   t.is(body.error, 'GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world')

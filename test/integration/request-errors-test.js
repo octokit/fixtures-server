@@ -28,6 +28,7 @@ test('request error: no matching fixture found', async t => {
       message: 'wrong message',
       content: 'wrong content'
     })
+    .catch((error) => error.response)
 
   t.is(status, 404)
   t.is(body.error, 'Nock: No match for request')

@@ -46,7 +46,7 @@ test('get repository redirect (gr2m/octokit-rest-browser-experimental#6)', async
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
-    .catch(t.error)
+    .catch((error) => error.response)
 
   t.is(getResponse.status, 301, getResponse.body.detail || getResponse.body.error)
   t.is(getResponse.headers.location, `http://localhost:3000${path}/repositories/1000`, 'redirect URL is prefixed correctly')
@@ -94,7 +94,7 @@ test('get repository success (redirect with custom URL test)', async t => {
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
-    .catch(t.error)
+    .catch((error) => error.response)
 
   t.is(getResponse.status, 301, getResponse.body.detail || getResponse.body.error)
   t.is(getResponse.headers.location, `https://deployment123.my-mock-server.com${path}/repositories/1000`, 'redirect URL is prefixed correctly')

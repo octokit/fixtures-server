@@ -28,6 +28,7 @@ test('binary response (octokit/rest.js#743)', async t => {
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
     })
+    .catch((error) => error.response)
 
   t.is(getArchiveResponse.status, 302)
   t.is(getArchiveResponse.headers.location, `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/master`)
