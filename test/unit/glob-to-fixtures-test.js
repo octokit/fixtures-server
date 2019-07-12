@@ -3,7 +3,7 @@ const { test } = require('tap')
 
 test('globToFixture globbing JSON file != normalized-fixture.json', t => {
   const globToFixture = proxyquire('../../lib/glob-to-fixtures', {
-    'glob': {
+    glob: {
       sync: () => ['/foo/bar.json']
     },
     '/foo/bar.json': 'baz'

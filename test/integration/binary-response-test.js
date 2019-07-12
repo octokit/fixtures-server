@@ -1,4 +1,4 @@
-const parseUrl = require('url').parse
+const { URL } = require('url')
 
 const express = require('express')
 const supertest = require('supertest')
@@ -33,10 +33,10 @@ test('binary response (octokit/rest.js#743)', async t => {
   t.is(getArchiveResponse.status, 302)
   t.is(getArchiveResponse.headers.location, `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/master`)
 
-  const path = parseUrl(getArchiveResponse.headers.location).path
+  const { pathname } = new URL(getArchiveResponse.headers.location)
 
   const { status } = await agent
-    .get(path)
+    .get(pathname)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'

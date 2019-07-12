@@ -1,4 +1,4 @@
-const parseUrl = require('url').parse
+const { URL } = require('url')
 
 const express = require('express')
 const supertest = require('supertest')
@@ -23,7 +23,7 @@ test('get repository success', async t => {
     .send({ scenario: 'get-repository' })
 
   const { body } = await agent
-    .get(`${parseUrl(url).path}/repos/octokit-fixture-org/hello-world`)
+    .get(`${new URL(url).pathname}/repos/octokit-fixture-org/hello-world`)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'
@@ -93,7 +93,7 @@ test('get repository with incorrect path', async t => {
     .send({ scenario: 'get-repository' })
 
   const { status, body } = await agent
-    .get(`${parseUrl(url).path}/foo`)
+    .get(`${new URL(url).pathname}/foo`)
     .set({
       accept: 'application/vnd.github.v3+json',
       authorization: 'token 0000000000000000000000000000000000000001'

@@ -1,6 +1,6 @@
 module.exports = fixtureServereMiddleware
 
-const { parse: urlParse, resolve: urlResolve } = require('url')
+const { URL } = require('url')
 
 const _ = require('lodash')
 const bodyParser = require('body-parser')
@@ -24,10 +24,14 @@ function fixtureServereMiddleware (options) {
   }
 
   state.cachimo = cachimo
-  state.log = Log({ level: state.logLevel === 'silent' ? 'fatal' : state.logLevel })
+  state.log = Log({
+    level: state.logLevel === 'silent' ? 'fatal' : state.logLevel
+  })
 
   middleware.post('/fixtures', bodyParser.json(), (request, response) => {
-    const id = Math.random().toString(36).substr(2)
+    const id = Math.random()
+      .toString(36)
+      .substr(2)
     const requestedFixture = state.fixtures[request.body.scenario]
 
     if (!requestedFixture) {
@@ -36,19 +40,24 @@ function fixtureServereMiddleware (options) {
       })
     }
 
-    const mock = fixtures.mock(requestedFixture, fixture => additions(state, { id, fixture }))
+    const mock = fixtures.mock(requestedFixture, fixture =>
+      additions(state, { id, fixture })
+    )
 
     cachimo
       .put(id, mock, state.ttl)
       .then(() => {
-        state.log.debug(`Deleted fixtures "${id}" (${mock.pending().length} pending)`)
+        state.log.debug(
+          `Deleted fixtures "${id}" (${mock.pending().length} pending)`
+        )
       })
       // throws error if key was deleted before timeout, safe to ignore
       .catch(() => {})
 
+    const path = new URL(requestedFixture[0].scope).hostname + '/' + id
     response.status(201).json({
       id,
-      url: urlResolve(state.fixturesUrl, urlParse(requestedFixture[0].scope).hostname + '/' + id)
+      url: new URL(path, state.fixturesUrl).href
     })
   })
 
