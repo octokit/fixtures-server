@@ -1,4 +1,4 @@
-const parseUrl = require('url').parse
+const { URL } = require('url')
 
 const express = require('express')
 const supertest = require('supertest')
@@ -24,7 +24,7 @@ test('get repository redirect (gr2m/octokit-rest-browser-experimental#6)', async
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
-  const path = parseUrl(fixtureResponse.body.url).path
+  const path = new URL(fixtureResponse.body.url).pathname
 
   const renameResponse = await agent
     .patch(`${path}/repos/octokit-fixture-org/rename-repository`)
@@ -72,7 +72,7 @@ test('get repository success (redirect with custom URL test)', async t => {
     .catch(t.error)
 
   t.is(fixtureResponse.status, 201, fixtureResponse.body.error)
-  const path = parseUrl(fixtureResponse.body.url).path
+  const path = new URL(fixtureResponse.body.url).pathname
 
   const renameResponse = await agent
     .patch(`${path}/repos/octokit-fixture-org/rename-repository`)
