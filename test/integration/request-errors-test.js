@@ -22,7 +22,7 @@ test('request error: no matching fixture found', async t => {
     .put(`${new URL(url).pathname}/repos/octokit-fixture-org/create-file/contents/test.txt`)
     .set({
       accept: 'application/vnd.github.v3+json',
-      Authorization: `token 0000000000000000000000000000000000000001`
+      Authorization: 'token 0000000000000000000000000000000000000001'
     })
     .send({
       message: 'wrong message',
