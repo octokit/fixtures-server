@@ -125,8 +125,6 @@
       "x-runtime-rack": "0.000000",
       "x-xss-protection": "1; mode=block"
     },
-    "badheaders": [
-      "authorization"
-    ]
+    "badheaders": ["authorization"]
   }
 ]

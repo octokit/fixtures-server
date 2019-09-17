@@ -1,6 +1,6 @@
-const { test } = require('tap')
+const { test } = require("tap");
 
-test('loades @octokit/fixtures-server', (t) => {
-  require('../..')
-  t.end()
-})
+test("loades @octokit/fixtures-server", t => {
+  require("../..");
+  t.end();
+});
