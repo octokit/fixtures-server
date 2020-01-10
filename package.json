@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/octokit/fixtures-server#readme",
   "dependencies": {
-    "@octokit/fixtures": "^18.0.0",
+    "@octokit/fixtures": "^19.0.0",
     "cachimo": "^1.0.6",
     "console-log-level": "^1.4.0",
     "cors": "^2.8.4",
