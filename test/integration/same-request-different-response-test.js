@@ -7,7 +7,7 @@ const middleware = require("../..");
 
 // Two GET /api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators
 // requests return different results based on order, see gr2m/octokit-rest-browser-experimental#4
-test("add-and-remove-repository-collaborator (same request/different response)", async t => {
+test("add-and-remove-repository-collaborator (same request/different response)", async (t) => {
   const app = express();
   app.use(
     middleware({
@@ -16,8 +16,8 @@ test("add-and-remove-repository-collaborator (same request/different response)",
       fixtures: {
         "add-and-remove-repository-collaborator": getScenarioFixture(
           "add-and-remove-repository-collaborator"
-        )
-      }
+        ),
+      },
     })
   );
 
@@ -37,7 +37,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch(t.error);
 
@@ -54,7 +54,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch(t.error);
 
@@ -70,7 +70,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .patch(`/api.github.com/${id}/user/repository_invitations/1000`)
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000002"
+      authorization: "token 0000000000000000000000000000000000000002",
     })
     .catch(t.error);
 
@@ -87,7 +87,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch(t.error);
 
@@ -107,7 +107,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch(t.error);
 
@@ -125,7 +125,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch(t.error);
 

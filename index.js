@@ -25,22 +25,20 @@ function fixtureServereMiddleware(options) {
 
   state.cachimo = cachimo;
   state.log = Log({
-    level: state.logLevel === "silent" ? "fatal" : state.logLevel
+    level: state.logLevel === "silent" ? "fatal" : state.logLevel,
   });
 
   middleware.post("/fixtures", bodyParser.json(), (request, response) => {
-    const id = Math.random()
-      .toString(36)
-      .substr(2);
+    const id = Math.random().toString(36).substr(2);
     const requestedFixture = state.fixtures[request.body.scenario];
 
     if (!requestedFixture) {
       return response.status(400).json({
-        error: `Scenario "${request.body.scenario}" not found`
+        error: `Scenario "${request.body.scenario}" not found`,
       });
     }
 
-    const mock = fixtures.mock(requestedFixture, fixture =>
+    const mock = fixtures.mock(requestedFixture, (fixture) =>
       additions(state, { id, fixture })
     );
 
@@ -57,7 +55,7 @@ function fixtureServereMiddleware(options) {
     const path = new URL(requestedFixture[0].scope).hostname + "/" + id;
     response.status(201).json({
       id,
-      url: new URL(path, state.fixturesUrl).href
+      url: new URL(path, state.fixturesUrl).href,
     });
   });
 
@@ -68,8 +66,8 @@ function fixtureServereMiddleware(options) {
     .map("scope")
     .uniq()
     // remove default ports for http / https, they cause problems for the proxy
-    .map(url => url.replace(/:(80|443)$/, ""))
-    .forEach(target => middleware.use(proxy(state, { target })))
+    .map((url) => url.replace(/:(80|443)$/, ""))
+    .forEach((target) => middleware.use(proxy(state, { target })))
     .value();
 
   return middleware;

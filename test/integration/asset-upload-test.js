@@ -5,31 +5,31 @@ const { test } = require("tap");
 const { getScenarioFixture } = require("../util");
 const middleware = require("../..");
 
-test("release asset (gr2m/octokit-rest-browser-experimental#5)", async t => {
+test("release asset (gr2m/octokit-rest-browser-experimental#5)", async (t) => {
   const app = express();
   app.use(
     middleware({
       logLevel: "error",
       ttl: 1000,
       fixtures: {
-        "release-assets": getScenarioFixture("release-assets")
-      }
+        "release-assets": getScenarioFixture("release-assets"),
+      },
     })
   );
 
   const agent = supertest(app);
   const {
-    body: { id: fixtureId }
+    body: { id: fixtureId },
   } = await agent.post("/fixtures").send({ scenario: "release-assets" });
   const {
-    body: { upload_url: updateUrl }
+    body: { upload_url: updateUrl },
   } = await agent
     .get(
       `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     });
 
   t.is(
@@ -43,16 +43,16 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async t => {
     )
     .query({
       name: "test-upload.txt",
-      label: "test"
+      label: "test",
     })
     .send("Hello, world!\n")
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
       "content-type": "text/plain",
-      "content-length": 14
+      "content-length": 14,
     })
-    .catch(error => console.log(error.stack));
+    .catch((error) => console.log(error.stack));
 
   t.is(result.body.name, "test-upload.txt");
 

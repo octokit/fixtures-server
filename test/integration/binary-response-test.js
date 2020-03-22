@@ -7,21 +7,21 @@ const { test } = require("tap");
 const { getScenarioFixture } = require("../util");
 const middleware = require("../..");
 
-test("binary response (octokit/rest.js#743)", async t => {
+test("binary response (octokit/rest.js#743)", async (t) => {
   const app = express();
   app.use(
     middleware({
       logLevel: "error",
       ttl: 1000,
       fixtures: {
-        "get-archive": getScenarioFixture("get-archive")
-      }
+        "get-archive": getScenarioFixture("get-archive"),
+      },
     })
   );
 
   const agent = supertest(app);
   const {
-    body: { id: fixtureId }
+    body: { id: fixtureId },
   } = await agent.post("/fixtures").send({ scenario: "get-archive" });
 
   const getArchiveResponse = await agent
@@ -30,9 +30,9 @@ test("binary response (octokit/rest.js#743)", async t => {
     )
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
-    .catch(error => error.response);
+    .catch((error) => error.response);
 
   t.is(getArchiveResponse.status, 302);
   t.is(
@@ -44,7 +44,7 @@ test("binary response (octokit/rest.js#743)", async t => {
 
   const { status } = await agent.get(pathname).set({
     accept: "application/vnd.github.v3+json",
-    authorization: "token 0000000000000000000000000000000000000001"
+    authorization: "token 0000000000000000000000000000000000000001",
   });
 
   t.is(status, 200);

@@ -85,8 +85,8 @@ const fixturesServer = require("@octokit/fixtures-server");
 app.use(
   fixturesServer({
     fixtures: {
-      "my-scenario": require("./scenarios/my-scenario.json")
-    }
+      "my-scenario": require("./scenarios/my-scenario.json"),
+    },
   })
 );
 

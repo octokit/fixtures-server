@@ -7,15 +7,15 @@ const { test } = require("tap");
 const { getScenarioFixture } = require("../util");
 const middleware = require("../..");
 
-test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async t => {
+test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async (t) => {
   const app = express();
   app.use(
     middleware({
       logLevel: "error",
       ttl: 1000,
       fixtures: {
-        "rename-repository": getScenarioFixture("rename-repository")
-      }
+        "rename-repository": getScenarioFixture("rename-repository"),
+      },
     })
   );
 
@@ -33,10 +33,10 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-      "content-type": "application/json; charset=utf-8"
+      "content-type": "application/json; charset=utf-8",
     })
     .send({
-      name: "rename-repository-newname"
+      name: "rename-repository-newname",
     })
     .catch(t.error);
 
@@ -50,9 +50,9 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
-    .catch(error => error.response);
+    .catch((error) => error.response);
 
   t.is(
     getResponse.status,
@@ -68,16 +68,16 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
   t.end();
 });
 
-test("get repository success (redirect with custom URL test)", async t => {
+test("get repository success (redirect with custom URL test)", async (t) => {
   const app = express();
   app.use(
     middleware({
       logLevel: "error",
       ttl: 1000,
       fixtures: {
-        "rename-repository": getScenarioFixture("rename-repository")
+        "rename-repository": getScenarioFixture("rename-repository"),
       },
-      fixturesUrl: "https://deployment123.my-mock-server.com"
+      fixturesUrl: "https://deployment123.my-mock-server.com",
     })
   );
 
@@ -95,10 +95,10 @@ test("get repository success (redirect with custom URL test)", async t => {
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-      "content-type": "application/json; charset=utf-8"
+      "content-type": "application/json; charset=utf-8",
     })
     .send({
-      name: "rename-repository-newname"
+      name: "rename-repository-newname",
     })
     .catch(t.error);
 
@@ -112,9 +112,9 @@ test("get repository success (redirect with custom URL test)", async t => {
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
     .set({
       accept: "application/vnd.github.v3+json",
-      authorization: "token 0000000000000000000000000000000000000001"
+      authorization: "token 0000000000000000000000000000000000000001",
     })
-    .catch(error => error.response);
+    .catch((error) => error.response);
 
   t.is(
     getResponse.status,

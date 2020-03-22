@@ -1,5 +1,5 @@
 module.exports = {
-  getScenarioFixture
+  getScenarioFixture,
 };
 
 function getScenarioFixture(name) {
