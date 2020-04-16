@@ -20,7 +20,7 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
    are valid values for `scenario`.
 
    ```
-   curl -XPOST -H'Content-Type: application/json' https://octokit-fixtures.now.sh/fixtures -d '{"scenario": "get-repository"}'
+   curl -XPOST -H'Content-Type: application/json' http://localhost:3000/fixtures -d '{"scenario": "get-repository"}'
    ```
 
    The response looks something like this
@@ -28,14 +28,14 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
    ```json
    {
      "id": "fixturesid123",
-     "url": "https://octokitfixtures-server-abc.now.sh/api.github.com/fixturesid123"
+     "url": "http://localhost:3000/api.github.com/fixturesid123/api.github.com/fixturesid123"
    }
    ```
 
 2. Send a request to the returned `url` as if it was https://api.github.com.
 
    ```
-   curl -H'Authorization: token 0000000000000000000000000000000000000001' -H'Accept: application/vnd.github.v3+json' https://octokitfixtures-server-abc.now.sh/api.github.com/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world
+   curl -H'Authorization: token 0000000000000000000000000000000000000001' -H'Accept: application/vnd.github.v3+json' http://localhost:3000/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world
    ```
 
 After that request the fixture is "consumed". That allows for different responses for the same requests based on order.
@@ -58,8 +58,6 @@ By default the server runs at http://localhost:3000
 ```
 octokit-fixtures-server
 ```
-
-From here it's the same usage as shown above, only with `http://localhost:3000` instead of `https://fixtures-server.now.sh`
 
 <a name="standalone-server-options"></a>
 
