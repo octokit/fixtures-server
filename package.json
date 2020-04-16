@@ -23,9 +23,7 @@
     "test": "tap --100 --coverage 'test/**/*-test.js'",
     "test:e2e": "npm run test:e2e:smoke && npm run test:e2e:custom-fixtures",
     "test:e2e:smoke": "test/end-to-end/smoke-test.sh",
-    "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh",
-    "presemantic-release": "pkg . --out-path=dist/",
-    "semantic-release": "semantic-release"
+    "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh"
   },
   "repository": {
     "type": "git",
@@ -59,14 +57,19 @@
     "tap": "^14.0.0"
   },
   "release": {
-    "publish": [
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
       "@semantic-release/npm",
-      {
-        "path": "@semantic-release/github",
-        "assets": [
-          "dist/*"
-        ]
-      }
+      [
+        "@semantic-release/github",
+        {
+          "path": "@semantic-release/github",
+          "assets": [
+            "dist/*"
+          ]
+        }
+      ]
     ]
   },
   "pkg": {

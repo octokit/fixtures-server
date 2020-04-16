@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: "12.x"
       - run: npm ci
+      - run: npx pkg . --out-path=dist/
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
