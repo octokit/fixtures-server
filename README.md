@@ -2,7 +2,6 @@
 
 > Fixtures server for browser & language agnositic octokit testing
 
-[![Uptime Robot status](https://img.shields.io/uptimerobot/status/m779994396-3ec04917419c0710766834a4.svg)](https://stats.uptimerobot.com/mYVwvIZWn)
 [![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest)
 
 The Octokit Fixtures Server is proxies requests to the mocked routes
