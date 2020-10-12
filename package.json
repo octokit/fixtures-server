@@ -52,7 +52,7 @@
     "pkg": "^4.3.3",
     "prettier": "^2.0.1",
     "proxyquire": "^2.0.0",
-    "semantic-release": "^17.0.0",
+    "semantic-release": "^17.2.1",
     "supertest": "^5.0.0",
     "tap": "^14.0.0"
   },
