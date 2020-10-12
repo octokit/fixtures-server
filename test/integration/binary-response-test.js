@@ -26,7 +26,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
 
   const getArchiveResponse = await agent
     .get(
-      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/master`
+      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/main`
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -37,7 +37,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
   t.is(getArchiveResponse.status, 302);
   t.is(
     getArchiveResponse.headers.location,
-    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/master`
+    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/main`
   );
 
   const { pathname } = new URL(getArchiveResponse.headers.location);
