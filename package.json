@@ -80,5 +80,10 @@
     "env": {
       "NODE_ENV": "production"
     }
+  },
+  "renovate": {
+    "extends": [
+      "github>octokit/.github"
+    ]
   }
 }
