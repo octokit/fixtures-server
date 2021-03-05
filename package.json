@@ -25,17 +25,10 @@
     "test:e2e:smoke": "test/end-to-end/smoke-test.sh",
     "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/octokit/fixtures-server.git"
-  },
+  "repository": "github:octokit/fixtures-server",
   "keywords": [],
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/octokit/fixtures-server/issues"
-  },
-  "homepage": "https://github.com/octokit/fixtures-server#readme",
   "dependencies": {
     "@octokit/fixtures": "21.3.5",
     "cachimo": "^2.0.1",
