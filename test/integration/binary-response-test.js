@@ -37,7 +37,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
   t.is(getArchiveResponse.status, 302);
   t.is(
     getArchiveResponse.headers.location,
-    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/main`
+    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
   );
 
   const { pathname } = new URL(getArchiveResponse.headers.location);
