@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "axios": "^0.21.0",
-    "pkg": "^4.3.3",
+    "pkg": "^5.0.0",
     "prettier": "^2.0.1",
     "proxyquire": "^2.0.0",
     "semantic-release": "^17.2.1",
