@@ -30,7 +30,7 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
-    "@octokit/fixtures": "21.5.0",
+    "@octokit/fixtures": "22.0.0",
     "cachimo": "^2.0.1",
     "console-log-level": "^1.4.0",
     "cors": "^2.8.4",
