@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const cors = require("cors");
-const express = require("express");
-const yargs = require("yargs");
+import cors from "cors";
+import express from "express";
+import yargs from "yargs";
 
-const fixtureServereMiddleware = require("..");
-const globTofixtures = require("../lib/glob-to-fixtures");
+import fixtureServereMiddleware from "..";
+import globTofixtures from "../lib/glob-to-fixtures";
 
-const DEFAULTS = require("../lib/defaults");
+import DEFAULTS from "../lib/defaults";
 
 // NOW_URL: support deployment to now.sh: https://zeit.co/docs/features/env-and-secrets
 const defaultFixtureUrl =
