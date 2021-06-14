@@ -1,8 +1,8 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const middleware = require("../..");
+import middleware from "../../index.js";
 
 test("create fixture success", (t) => {
   const app = express();

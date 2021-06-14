@@ -1,9 +1,9 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 test("release asset (gr2m/octokit-rest-browser-experimental#5)", async (t) => {
   const app = express();

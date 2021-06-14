@@ -1,6 +1,6 @@
-const { test } = require("tap");
+import { test } from "tap";
 
-test("loades @octokit/fixtures-server", (t) => {
-  require("../..");
+test("loads @octokit/fixtures-server", async (t) => {
+  await import("../../index.js").default;
   t.end();
 });

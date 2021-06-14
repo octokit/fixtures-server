@@ -1,5 +1,5 @@
-const { test } = require("tap");
-const mapValuesDeep = require("../../lib/map-values-deep");
+import { test } from "tap";
+import mapValuesDeep from "../../lib/map-values-deep.js";
 
 test("mapValuesDeep leaves arrays intact (#5)", (t) => {
   const result = mapValuesDeep([1, 2], () => 0);
