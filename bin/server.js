@@ -4,10 +4,10 @@ import cors from "cors";
 import express from "express";
 import yargs from "yargs";
 
-import fixtureServereMiddleware from "..";
-import globTofixtures from "../lib/glob-to-fixtures";
+import fixtureServereMiddleware from "../index.js";
+import globTofixtures from "../lib/glob-to-fixtures.js ";
 
-import DEFAULTS from "../lib/defaults";
+import DEFAULTS from "../lib/defaults.js";
 
 // NOW_URL: support deployment to now.sh: https://zeit.co/docs/features/env-and-secrets
 const defaultFixtureUrl =
