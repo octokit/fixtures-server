@@ -1,5 +1,7 @@
-const proxyquire = require("proxyquire").noCallThru();
-const { test } = require("tap");
+import _proxyquire from "proxyquire";
+
+const proxyquire = _proxyquire.noCallThru();
+import { test } from "tap";
 
 test("globToFixture globbing JSON file != normalized-fixture.json", (t) => {
   const globToFixture = proxyquire("../../lib/glob-to-fixtures", {

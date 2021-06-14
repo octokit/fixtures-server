@@ -1,10 +1,10 @@
-const { URL } = require("url");
+import { URL } from "url";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const middleware = require("../..");
+import middleware from "../../index.js";
 
 test("request error: no matching fixture found", async (t) => {
   const app = express();

@@ -1,9 +1,9 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 // Two GET /api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators
 // requests return different results based on order, see gr2m/octokit-rest-browser-experimental#4
