@@ -1,21 +1,21 @@
-module.exports = fixtureServereMiddleware;
+export default fixtureServereMiddleware;
 
-const { URL } = require("url");
+import { URL } from "url";
 
-const _ = require("lodash");
-const bodyParser = require("body-parser");
-const cachimo = require("cachimo");
-const express = require("express");
-const fixtures = require("@octokit/fixtures");
-const Log = require("console-log-level");
+import _ from "lodash";
+import bodyParser from "body-parser";
+import cachimo from "cachimo";
+import { Router } from "express";
+import fixtures from "@octokit/fixtures";
+import Log from "console-log-level";
 
-const additions = require("./lib/additions");
-const proxy = require("./lib/proxy");
+import additions from "./lib/additions.js";
+import proxy from "./lib/proxy.js";
 
-const DEFAULTS = require("./lib/defaults");
+import DEFAULTS from "./lib/defaults.js";
 
 function fixtureServereMiddleware(options) {
-  const middleware = express.Router();
+  const middleware = Router();
 
   const state = _.defaults(_.clone(options), DEFAULTS);
 
