@@ -6,6 +6,7 @@
   },
   "description": "Fixtures server for browser & language agnositic octokit testing",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "octokit-fixtures-server": "bin/server.js"
   },
