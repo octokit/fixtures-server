@@ -2,12 +2,11 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
-import { test } from "tap";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async (t) => {
+test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async (done) => {
   const app = express();
   app.use(
     middleware({
@@ -23,9 +22,9 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
   const fixtureResponse = await agent
     .post("/fixtures")
     .send({ scenario: "rename-repository" })
-    .catch(t.error);
+    .catch(done.fail);
 
-  t.is(fixtureResponse.status, 201, fixtureResponse.body.error);
+  expect(fixtureResponse.status).toBe(201);
   const path = new URL(fixtureResponse.body.url).pathname;
 
   const renameResponse = await agent
@@ -38,13 +37,9 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     .send({
       name: "rename-repository-newname",
     })
-    .catch(t.error);
+    .catch(done.fail);
 
-  t.is(
-    renameResponse.status,
-    200,
-    renameResponse.body.detail || renameResponse.body.error
-  );
+  expect(renameResponse.status).toBe(200);
 
   const getResponse = await agent
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
@@ -54,21 +49,13 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     })
     .catch((error) => error.response);
 
-  t.is(
-    getResponse.status,
-    301,
-    getResponse.body.detail || getResponse.body.error
+  expect(getResponse.status).toBe(301);
+  expect(getResponse.headers.location).toBe(
+    `http://localhost:3000${path}/repositories/1000`
   );
-  t.is(
-    getResponse.headers.location,
-    `http://localhost:3000${path}/repositories/1000`,
-    "redirect URL is prefixed correctly"
-  );
-
-  t.end();
 });
 
-test("get repository success (redirect with custom URL test)", async (t) => {
+test("get repository success (redirect with custom URL test)", async (done) => {
   const app = express();
   app.use(
     middleware({
@@ -85,9 +72,9 @@ test("get repository success (redirect with custom URL test)", async (t) => {
   const fixtureResponse = await agent
     .post("/fixtures")
     .send({ scenario: "rename-repository" })
-    .catch(t.error);
+    .catch(done.fail);
 
-  t.is(fixtureResponse.status, 201, fixtureResponse.body.error);
+  expect(fixtureResponse.status).toBe(201);
   const path = new URL(fixtureResponse.body.url).pathname;
 
   const renameResponse = await agent
@@ -100,13 +87,9 @@ test("get repository success (redirect with custom URL test)", async (t) => {
     .send({
       name: "rename-repository-newname",
     })
-    .catch(t.error);
+    .catch(done.fail);
 
-  t.is(
-    renameResponse.status,
-    200,
-    renameResponse.body.detail || renameResponse.body.error
-  );
+  expect(renameResponse.status).toBe(200);
 
   const getResponse = await agent
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
@@ -116,16 +99,8 @@ test("get repository success (redirect with custom URL test)", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(
-    getResponse.status,
-    301,
-    getResponse.body.detail || getResponse.body.error
+  expect(getResponse.status).toBe(301);
+  expect(getResponse.headers.location).toBe(
+    `https://deployment123.my-mock-server.com${path}/repositories/1000`
   );
-  t.is(
-    getResponse.headers.location,
-    `https://deployment123.my-mock-server.com${path}/repositories/1000`,
-    "redirect URL is prefixed correctly"
-  );
-
-  t.end();
 });

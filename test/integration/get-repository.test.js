@@ -2,12 +2,11 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
-import { test } from "tap";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("get repository success", async (t) => {
+test("get repository success", async () => {
   const app = express();
   app.use(
     middleware({
@@ -31,11 +30,10 @@ test("get repository success", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(body.name, "hello-world");
-  t.end();
+  expect(body.name).toBe("hello-world");
 });
 
-test("get repository without Accept header", async (t) => {
+test("get repository without Accept header", async () => {
   const app = express();
   app.use(
     middleware({
@@ -52,12 +50,11 @@ test("get repository without Accept header", async (t) => {
     .get("/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world")
     .catch((error) => error.response);
 
-  t.is(status, 400);
-  t.is(body.error, "Accept header required");
-  t.end();
+  expect(status).toBe(400);
+  expect(body.error).toBe("Accept header required");
 });
 
-test("get repository with invalid X-Fixtures-Id header", async (t) => {
+test("get repository with invalid X-Fixtures-Id header", async () => {
   const app = express();
   app.use(
     middleware({
@@ -78,12 +75,11 @@ test("get repository with invalid X-Fixtures-Id header", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(body.error, 'Fixture "fixturesid123" not found');
-  t.end();
+  expect(status).toBe(404);
+  expect(body.error).toBe('Fixture "fixturesid123" not found');
 });
 
-test("get repository with incorrect path", async (t) => {
+test("get repository with incorrect path", async () => {
   const app = express();
   app.use(
     middleware({
@@ -108,10 +104,8 @@ test("get repository with incorrect path", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(
-    body.error,
+  expect(status).toBe(404);
+  expect(body.error).toBe(
     "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world"
   );
-  t.end();
 });
