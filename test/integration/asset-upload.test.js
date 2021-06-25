@@ -1,11 +1,10 @@
 import express from "express";
 import supertest from "supertest";
-import { test } from "tap";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("release asset (gr2m/octokit-rest-browser-experimental#5)", async (t) => {
+test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -32,8 +31,7 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(
-    updateUrl,
+  expect(updateUrl).toBe(
     `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
   );
 
@@ -54,7 +52,5 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async (t) => {
     })
     .catch((error) => console.log(error.stack));
 
-  t.is(result.body.name, "test-upload.txt");
-
-  t.end();
+  expect(result.body.name).toBe("test-upload.txt");
 });

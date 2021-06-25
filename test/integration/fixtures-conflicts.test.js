@@ -1,11 +1,10 @@
 import express from "express";
 import supertest from "supertest";
-import { test } from "tap";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("conflicts test (#8)", async (t) => {
+test("conflicts test (#8)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -35,8 +34,7 @@ test("conflicts test (#8)", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(
-    uploadUrl,
+  expect(uploadUrl).toBe(
     `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
   );
 
@@ -57,7 +55,5 @@ test("conflicts test (#8)", async (t) => {
     })
     .catch((error) => console.log(error.stack));
 
-  t.is(result.body.name, "test-upload.txt");
-
-  t.end();
+  expect(result.body.name).toBe("test-upload.txt");
 });

@@ -2,12 +2,11 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
-import { test } from "tap";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("binary response (octokit/rest.js#743)", async (t) => {
+test("binary response (octokit/rest.js#743)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -34,9 +33,8 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(getArchiveResponse.status, 302);
-  t.is(
-    getArchiveResponse.headers.location,
+  expect(getArchiveResponse.status).toBe(302);
+  expect(getArchiveResponse.headers.location).toBe(
     `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
   );
 
@@ -47,7 +45,5 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     authorization: "token 0000000000000000000000000000000000000001",
   });
 
-  t.is(status, 200);
-
-  t.end();
+  expect(status).toBe(200);
 });
