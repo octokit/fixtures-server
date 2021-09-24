@@ -2,9 +2,13 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
+
+const test = suite("get repository");
 
 test("get repository success", async () => {
   const app = express();
@@ -30,7 +34,7 @@ test("get repository success", async () => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  expect(body.name).toBe("hello-world");
+  assert.equal(body.name, "hello-world");
 });
 
 test("get repository without Accept header", async () => {
@@ -50,8 +54,8 @@ test("get repository without Accept header", async () => {
     .get("/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world")
     .catch((error) => error.response);
 
-  expect(status).toBe(400);
-  expect(body.error).toBe("Accept header required");
+  assert.equal(status, 400);
+  assert.equal(body.error, "Accept header required");
 });
 
 test("get repository with invalid X-Fixtures-Id header", async () => {
@@ -75,8 +79,8 @@ test("get repository with invalid X-Fixtures-Id header", async () => {
     })
     .catch((error) => error.response);
 
-  expect(status).toBe(404);
-  expect(body.error).toBe('Fixture "fixturesid123" not found');
+  assert.equal(status, 404);
+  assert.equal(body.error, 'Fixture "fixturesid123" not found');
 });
 
 test("get repository with incorrect path", async () => {
@@ -104,8 +108,11 @@ test("get repository with incorrect path", async () => {
     })
     .catch((error) => error.response);
 
-  expect(status).toBe(404);
-  expect(body.error).toBe(
+  assert.equal(status, 404);
+  assert.equal(
+    body.error,
     "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world"
   );
 });
+
+test.run();

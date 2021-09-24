@@ -21,7 +21,9 @@
     "lint": "prettier --check '{bin,lib,scripts,test}/**/*.{js,json}' index.js README.md package.json",
     "lint:fix": "prettier --write '{bin,lib,scripts,test}/**/*.{js,json}' index.js README.md package.json",
     "pretest": "npm run -s lint",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage -i 'test/.*/.*'",
+    "test": "npm run test:integration && npm run test:unit",
+    "test:integration": "uvu test/integration",
+    "test:unit": "uvu test/unit",
     "test:e2e": "npm run test:e2e:smoke && npm run test:e2e:custom-fixtures",
     "test:e2e:smoke": "test/end-to-end/smoke-test.sh",
     "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh"
@@ -42,13 +44,12 @@
     "yargs": "^17.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.2",
     "axios": "^0.21.0",
-    "jest": "^27.2.1",
     "pkg": "^5.0.0",
     "prettier": "^2.0.1",
     "semantic-release": "^18.0.0",
-    "supertest": "^6.0.0"
+    "supertest": "^6.0.0",
+    "uvu": "^0.5.1"
   },
   "release": {
     "plugins": [
@@ -79,15 +80,5 @@
     "extends": [
       "github>octokit/.github"
     ]
-  },
-  "jest": {
-    "coverageThreshold": {
-      "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    }
   }
 }

@@ -2,11 +2,15 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
-test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async (done) => {
+const test = suite("redirects");
+
+test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -21,10 +25,9 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
   const agent = supertest(app);
   const fixtureResponse = await agent
     .post("/fixtures")
-    .send({ scenario: "rename-repository" })
-    .catch(done.fail);
+    .send({ scenario: "rename-repository" });
 
-  expect(fixtureResponse.status).toBe(201);
+  assert.equal(fixtureResponse.status, 201);
   const path = new URL(fixtureResponse.body.url).pathname;
 
   const renameResponse = await agent
@@ -36,10 +39,9 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     })
     .send({
       name: "rename-repository-newname",
-    })
-    .catch(done.fail);
+    });
 
-  expect(renameResponse.status).toBe(200);
+  assert.equal(renameResponse.status, 200);
 
   const getResponse = await agent
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
@@ -49,13 +51,14 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     })
     .catch((error) => error.response);
 
-  expect(getResponse.status).toBe(301);
-  expect(getResponse.headers.location).toBe(
+  assert.equal(getResponse.status, 301);
+  assert.equal(
+    getResponse.headers.location,
     `http://localhost:3000${path}/repositories/1000`
   );
 });
 
-test("get repository success (redirect with custom URL test)", async (done) => {
+test("get repository success (redirect with custom URL test)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -71,10 +74,9 @@ test("get repository success (redirect with custom URL test)", async (done) => {
   const agent = supertest(app);
   const fixtureResponse = await agent
     .post("/fixtures")
-    .send({ scenario: "rename-repository" })
-    .catch(done.fail);
+    .send({ scenario: "rename-repository" });
 
-  expect(fixtureResponse.status).toBe(201);
+  assert.equal(fixtureResponse.status, 201);
   const path = new URL(fixtureResponse.body.url).pathname;
 
   const renameResponse = await agent
@@ -86,10 +88,9 @@ test("get repository success (redirect with custom URL test)", async (done) => {
     })
     .send({
       name: "rename-repository-newname",
-    })
-    .catch(done.fail);
+    });
 
-  expect(renameResponse.status).toBe(200);
+  assert.equal(renameResponse.status, 200);
 
   const getResponse = await agent
     .get(`${path}/repos/octokit-fixture-org/rename-repository`)
@@ -99,8 +100,11 @@ test("get repository success (redirect with custom URL test)", async (done) => {
     })
     .catch((error) => error.response);
 
-  expect(getResponse.status).toBe(301);
-  expect(getResponse.headers.location).toBe(
+  assert.equal(getResponse.status, 301);
+  assert.equal(
+    getResponse.headers.location,
     `https://deployment123.my-mock-server.com${path}/repositories/1000`
   );
 });
+
+test.run();

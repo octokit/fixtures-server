@@ -1,12 +1,16 @@
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
 
+const test = suite("same request, different response");
+
 // Two GET /api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators
 // requests return different results based on order, see gr2m/octokit-rest-browser-experimental#4
-test("add-and-remove-repository-collaborator (same request/different response)", async (done) => {
+test("add-and-remove-repository-collaborator (same request/different response)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -23,10 +27,9 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   const agent = supertest(app);
   const fixtureResponse = await agent
     .post("/fixtures")
-    .send({ scenario: "add-and-remove-repository-collaborator" })
-    .catch(done.fail);
+    .send({ scenario: "add-and-remove-repository-collaborator" });
 
-  expect(fixtureResponse.status).toBe(201);
+  assert.equal(fixtureResponse.status, 201);
   const { id } = fixtureResponse.body;
 
   // https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
@@ -37,10 +40,9 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-    })
-    .catch(done.fail);
+    });
 
-  expect(addCollaboratorResponse.status).toBe(201);
+  assert.equal(addCollaboratorResponse.status, 201);
 
   // https://developer.github.com/v3/repos/invitations/
   const getInvitationsResponse = await agent
@@ -50,11 +52,10 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-    })
-    .catch(done.fail());
+    });
 
-  expect(getInvitationsResponse.status).toBe(200);
-  expect(getInvitationsResponse.body[0].id).toBe(1000);
+  assert.equal(getInvitationsResponse.status, 200);
+  assert.equal(getInvitationsResponse.body[0].id, 1000);
 
   // https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
   const acceptInvitationResponse = await agent
@@ -62,10 +63,9 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000002",
-    })
-    .catch(done.fail);
+    });
 
-  expect(acceptInvitationResponse.status).toBe(204);
+  assert.equal(acceptInvitationResponse.status, 204);
 
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators1Response = await agent
@@ -75,12 +75,12 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-    })
-    .catch(done.fail);
+    });
 
-  expect(listCollaborators1Response.status).toBe(200);
+  assert.equal(listCollaborators1Response.status, 200);
   // listCollaborators1Response.body should be an array, but instead is an {'1': {}, '2': {}} object ¯\_(ツ)_/¯
-  expect(listCollaborators1Response.body[1].login).toBe(
+  assert.equal(
+    listCollaborators1Response.body[1].login,
     "octokit-fixture-user-b"
   );
 
@@ -92,10 +92,9 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-    })
-    .catch(done.fail);
+    });
 
-  expect(removeCollaboratorResponse.status).toBe(204);
+  assert.equal(removeCollaboratorResponse.status, 204);
 
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators2Response = await agent
@@ -105,9 +104,10 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-    })
-    .catch(done.fail);
+    });
 
-  expect(listCollaborators2Response.status).toBe(200);
-  expect(listCollaborators2Response.body[1]).toBe(undefined);
+  assert.equal(listCollaborators2Response.status, 200);
+  assert.equal(listCollaborators2Response.body[1], undefined);
 });
+
+test.run();

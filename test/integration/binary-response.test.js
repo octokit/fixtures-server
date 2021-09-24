@@ -2,9 +2,13 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
+
+const test = suite("binary response");
 
 test("binary response (octokit/rest.js#743)", async () => {
   const app = express();
@@ -33,8 +37,9 @@ test("binary response (octokit/rest.js#743)", async () => {
     })
     .catch((error) => error.response);
 
-  expect(getArchiveResponse.status).toBe(302);
-  expect(getArchiveResponse.headers.location).toBe(
+  assert.equal(getArchiveResponse.status, 302);
+  assert.equal(
+    getArchiveResponse.headers.location,
     `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
   );
 
@@ -45,5 +50,7 @@ test("binary response (octokit/rest.js#743)", async () => {
     authorization: "token 0000000000000000000000000000000000000001",
   });
 
-  expect(status).toBe(200);
+  assert.equal(status, 200);
 });
+
+test.run();

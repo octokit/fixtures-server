@@ -1,8 +1,12 @@
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
+
+const test = suite("asset-upload");
 
 test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
   const app = express();
@@ -31,7 +35,8 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  expect(updateUrl).toBe(
+  assert.equal(
+    updateUrl,
     `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
   );
 
@@ -52,5 +57,7 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
     })
     .catch((error) => console.log(error.stack));
 
-  expect(result.body.name).toBe("test-upload.txt");
+  assert.equal(result.body.name, "test-upload.txt");
 });
+
+test.run();

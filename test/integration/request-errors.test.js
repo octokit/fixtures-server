@@ -2,8 +2,12 @@ import { URL } from "url";
 
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import middleware from "../../index.js";
+
+const test = suite("request errors");
 
 test("request error: no matching fixture found", async () => {
   const app = express();
@@ -35,6 +39,8 @@ test("request error: no matching fixture found", async () => {
     })
     .catch((error) => error.response);
 
-  expect(status).toBe(404);
-  expect(body.error).toBe("Nock: No match for request");
+  assert.equal(status, 404);
+  assert.equal(body.error, "Nock: No match for request");
 });
+
+test.run();

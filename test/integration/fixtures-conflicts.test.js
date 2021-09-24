@@ -1,8 +1,12 @@
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import { getScenarioFixture } from "../util.js";
 import middleware from "../../index.js";
+
+const test = suite("fixtures conflicts");
 
 test("conflicts test (#8)", async () => {
   const app = express();
@@ -34,7 +38,8 @@ test("conflicts test (#8)", async () => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  expect(uploadUrl).toBe(
+  assert.equal(
+    uploadUrl,
     `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
   );
 
@@ -55,5 +60,7 @@ test("conflicts test (#8)", async () => {
     })
     .catch((error) => console.log(error.stack));
 
-  expect(result.body.name).toBe("test-upload.txt");
+  assert.equal(result.body.name, "test-upload.txt");
 });
+
+test.run();

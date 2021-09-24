@@ -1,9 +1,13 @@
 import express from "express";
 import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
 import middleware from "../../index.js";
 
-test("create fixture success", (done) => {
+const test = suite("load fixtures");
+
+test("create fixture success", () => {
   const app = express();
   app.use(
     middleware({
@@ -12,19 +16,17 @@ test("create fixture success", (done) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "get-repository" })
     .then((response) => {
       const { id, url } = response.body;
-      expect(id).toBeTruthy();
-      expect(url).toBe(`http://localhost:3000/api.github.com/${id}`);
-      done();
-    })
-    .catch(done.fail);
+      assert.ok(id);
+      assert.equal(url, `http://localhost:3000/api.github.com/${id}`);
+    });
 });
 
-test("create fixture error", (done) => {
+test("create fixture error", () => {
   const app = express();
   app.use(
     middleware({
@@ -33,19 +35,17 @@ test("create fixture error", (done) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "nope" })
     .catch((error) => error.response)
     .then((response) => {
-      expect(response.status).toBe(400);
-      expect(response.body.error).toBe('Scenario "nope" not found');
-      done();
-    })
-    .catch(done.fail);
+      assert.equal(response.status, 400);
+      assert.equal(response.body.error, 'Scenario "nope" not found');
+    });
 });
 
-test("create fixture with custom url", (done) => {
+test("create fixture with custom url", () => {
   const app = express();
   app.use(
     middleware({
@@ -55,16 +55,17 @@ test("create fixture with custom url", (done) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "get-repository" })
     .then((response) => {
       const { id, url } = response.body;
-      expect(id).toBeTruthy();
-      expect(url).toBe(
+      assert.ok(id);
+      assert.equal(
+        url,
         `https://deployment-123.my-fixtures.com/api.github.com/${id}`
       );
-      done();
-    })
-    .catch(done.fail);
+    });
 });
+
+test.run();

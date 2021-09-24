@@ -1,11 +1,17 @@
-jest.mock("glob", () => ({
-  sync: () => ["/foo/bar.json"],
-}));
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-jest.mock("/foo/bar.json", () => "baz");
+import globToFixtures from "../../lib/glob-to-fixtures.js";
 
-test("globToFixture globbing JSON file != normalized-fixture.json", async () => {
-  const globToFixture = (await import("../../lib/glob-to-fixtures.js")).default;
-  const fixtures = globToFixture();
-  expect(fixtures).toEqual({ bar: "baz" });
+const test = suite("globToFixtures");
+
+test("globToFixtures globbing JSON file != normalized-fixture.json", async () => {
+  const fixtures = globToFixtures("test/fixtures/scenario/*");
+  assert.equal(fixtures, {
+    foo: {
+      bar: "baz",
+    },
+  });
 });
+
+test.run();
