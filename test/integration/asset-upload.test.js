@@ -1,11 +1,14 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
-test("conflicts test (#8)", async (t) => {
+const test = suite("asset-upload");
+
+test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -18,14 +21,11 @@ test("conflicts test (#8)", async (t) => {
   );
 
   const agent = supertest(app);
-
-  // intentionally load same fixture twice
-  await agent.post("/fixtures").send({ scenario: "release-assets" });
   const {
     body: { id: fixtureId },
   } = await agent.post("/fixtures").send({ scenario: "release-assets" });
   const {
-    body: { upload_url: uploadUrl },
+    body: { upload_url: updateUrl },
   } = await agent
     .get(
       `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`
@@ -35,8 +35,8 @@ test("conflicts test (#8)", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(
-    uploadUrl,
+  assert.equal(
+    updateUrl,
     `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
   );
 
@@ -57,7 +57,7 @@ test("conflicts test (#8)", async (t) => {
     })
     .catch((error) => console.log(error.stack));
 
-  t.is(result.body.name, "test-upload.txt");
-
-  t.end();
+  assert.equal(result.body.name, "test-upload.txt");
 });
+
+test.run();

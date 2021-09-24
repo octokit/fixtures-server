@@ -1,19 +1,20 @@
 #!/usr/bin/env node
 
-const cors = require("cors");
-const express = require("express");
-const yargs = require("yargs");
+import cors from "cors";
+import express from "express";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 
-const fixtureServereMiddleware = require("..");
-const globTofixtures = require("../lib/glob-to-fixtures");
+import fixtureServereMiddleware from "../index.js";
+import globTofixtures from "../lib/glob-to-fixtures.js ";
 
-const DEFAULTS = require("../lib/defaults");
+import DEFAULTS from "../lib/defaults.js";
 
 // NOW_URL: support deployment to now.sh: https://zeit.co/docs/features/env-and-secrets
 const defaultFixtureUrl =
   process.env.NOW_URL || process.env.FIXTURES_URL || DEFAULTS.fixturesUrl;
 
-const { argv } = yargs
+const { argv } = yargs(hideBin(process.argv))
   .options({
     port: {
       type: "number",

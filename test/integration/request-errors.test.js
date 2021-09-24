@@ -1,12 +1,15 @@
-const { URL } = require("url");
+import { URL } from "url";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-const middleware = require("../..");
+import middleware from "../../index.js";
 
-test("request error: no matching fixture found", async (t) => {
+const test = suite("request errors");
+
+test("request error: no matching fixture found", async () => {
   const app = express();
   app.use(
     middleware({
@@ -36,8 +39,8 @@ test("request error: no matching fixture found", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(body.error, "Nock: No match for request");
-
-  t.end();
+  assert.equal(status, 404);
+  assert.equal(body.error, "Nock: No match for request");
 });
+
+test.run();

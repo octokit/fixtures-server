@@ -1,13 +1,16 @@
-const { URL } = require("url");
+import { URL } from "url";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
-test("binary response (octokit/rest.js#743)", async (t) => {
+const test = suite("binary response");
+
+test("binary response (octokit/rest.js#743)", async () => {
   const app = express();
   app.use(
     middleware({
@@ -34,8 +37,8 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(getArchiveResponse.status, 302);
-  t.is(
+  assert.equal(getArchiveResponse.status, 302);
+  assert.equal(
     getArchiveResponse.headers.location,
     `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
   );
@@ -47,7 +50,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     authorization: "token 0000000000000000000000000000000000000001",
   });
 
-  t.is(status, 200);
-
-  t.end();
+  assert.equal(status, 200);
 });
+
+test.run();

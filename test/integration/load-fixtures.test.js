@@ -1,10 +1,13 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-const middleware = require("../..");
+import middleware from "../../index.js";
 
-test("create fixture success", (t) => {
+const test = suite("load fixtures");
+
+test("create fixture success", () => {
   const app = express();
   app.use(
     middleware({
@@ -13,19 +16,17 @@ test("create fixture success", (t) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "get-repository" })
     .then((response) => {
       const { id, url } = response.body;
-      t.ok(id);
-      t.is(url, `http://localhost:3000/api.github.com/${id}`);
-      t.end();
-    })
-    .catch(t.error);
+      assert.ok(id);
+      assert.equal(url, `http://localhost:3000/api.github.com/${id}`);
+    });
 });
 
-test("create fixture error", (t) => {
+test("create fixture error", () => {
   const app = express();
   app.use(
     middleware({
@@ -34,19 +35,17 @@ test("create fixture error", (t) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "nope" })
     .catch((error) => error.response)
     .then((response) => {
-      t.is(response.status, 400);
-      t.is(response.body.error, 'Scenario "nope" not found');
-      t.end();
-    })
-    .catch(t.error);
+      assert.equal(response.status, 400);
+      assert.equal(response.body.error, 'Scenario "nope" not found');
+    });
 });
 
-test("create fixture with custom url", (t) => {
+test("create fixture with custom url", () => {
   const app = express();
   app.use(
     middleware({
@@ -56,14 +55,17 @@ test("create fixture with custom url", (t) => {
     })
   );
 
-  supertest(app)
+  return supertest(app)
     .post("/fixtures")
     .send({ scenario: "get-repository" })
     .then((response) => {
       const { id, url } = response.body;
-      t.ok(id);
-      t.is(url, `https://deployment-123.my-fixtures.com/api.github.com/${id}`);
-      t.end();
-    })
-    .catch(t.error);
+      assert.ok(id);
+      assert.equal(
+        url,
+        `https://deployment-123.my-fixtures.com/api.github.com/${id}`
+      );
+    });
 });
+
+test.run();

@@ -1,13 +1,16 @@
-const { URL } = require("url");
+import { URL } from "url";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { suite } from "uvu";
+import * as assert from "uvu/assert";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
-test("get repository success", async (t) => {
+const test = suite("get repository");
+
+test("get repository success", async () => {
   const app = express();
   app.use(
     middleware({
@@ -31,11 +34,10 @@ test("get repository success", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(body.name, "hello-world");
-  t.end();
+  assert.equal(body.name, "hello-world");
 });
 
-test("get repository without Accept header", async (t) => {
+test("get repository without Accept header", async () => {
   const app = express();
   app.use(
     middleware({
@@ -52,12 +54,11 @@ test("get repository without Accept header", async (t) => {
     .get("/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world")
     .catch((error) => error.response);
 
-  t.is(status, 400);
-  t.is(body.error, "Accept header required");
-  t.end();
+  assert.equal(status, 400);
+  assert.equal(body.error, "Accept header required");
 });
 
-test("get repository with invalid X-Fixtures-Id header", async (t) => {
+test("get repository with invalid X-Fixtures-Id header", async () => {
   const app = express();
   app.use(
     middleware({
@@ -78,12 +79,11 @@ test("get repository with invalid X-Fixtures-Id header", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(body.error, 'Fixture "fixturesid123" not found');
-  t.end();
+  assert.equal(status, 404);
+  assert.equal(body.error, 'Fixture "fixturesid123" not found');
 });
 
-test("get repository with incorrect path", async (t) => {
+test("get repository with incorrect path", async () => {
   const app = express();
   app.use(
     middleware({
@@ -108,10 +108,11 @@ test("get repository with incorrect path", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(
+  assert.equal(status, 404);
+  assert.equal(
     body.error,
     "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world"
   );
-  t.end();
 });
+
+test.run();
