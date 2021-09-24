@@ -28,3 +28,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:e2e
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+      - run: npm ci
+      - run: npx caxa --input . --output dist/fixtures-server -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"

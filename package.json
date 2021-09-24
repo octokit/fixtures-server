@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "axios": "^0.21.0",
-    "pkg": "^5.0.0",
+    "caxa": "^2.1.0",
     "prettier": "^2.0.1",
     "semantic-release": "^18.0.0",
     "supertest": "^6.0.0",
@@ -66,9 +66,6 @@
         }
       ]
     ]
-  },
-  "pkg": {
-    "scripts": "node_modules/@octokit/fixtures/scenarios/**/*.json"
   },
   "now": {
     "alias": "octokit-fixtures",

@@ -17,7 +17,7 @@ jobs:
           node-version: 16
           cache: npm
       - run: npm ci
-      - run: npx pkg . --out-path=dist/
+      - run: npx caxa --input . --output dist/fixtures-server -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
