@@ -3,6 +3,7 @@
 import cors from "cors";
 import express from "express";
 import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 
 import fixtureServereMiddleware from "../index.js";
 import globTofixtures from "../lib/glob-to-fixtures.js ";
@@ -13,7 +14,7 @@ import DEFAULTS from "../lib/defaults.js";
 const defaultFixtureUrl =
   process.env.NOW_URL || process.env.FIXTURES_URL || DEFAULTS.fixturesUrl;
 
-const { argv } = yargs
+const { argv } = yargs(hideBin(process.argv))
   .options({
     port: {
       type: "number",
