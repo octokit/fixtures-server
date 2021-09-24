@@ -35,7 +35,7 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-      "content-type": "application/json; charset=utf-8",
+      "content-type": "application/json",
     })
     .send({
       name: "rename-repository-newname",
@@ -84,7 +84,7 @@ test("get repository success (redirect with custom URL test)", async () => {
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
-      "content-type": "application/json; charset=utf-8",
+      "content-type": "application/json",
     })
     .send({
       name: "rename-repository-newname",
