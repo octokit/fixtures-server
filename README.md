@@ -2,7 +2,7 @@
 
 > Fixtures server for browser & language agnositic octokit testing
 
-[![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest)
+[![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg?branch=master)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest+branch%3Amaster)
 
 The Octokit Fixtures Server is proxies requests to the mocked routes
 provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
