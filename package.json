@@ -68,7 +68,10 @@
     ]
   },
   "pkg": {
-    "scripts": "node_modules/@octokit/fixtures/scenarios/**/*.json"
+    "scripts": "node_modules/@octokit/fixtures/scenarios/**/*.json",
+    "options": [
+      "experimental-modules"
+    ]
   },
   "now": {
     "alias": "octokit-fixtures",

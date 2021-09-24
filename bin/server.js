@@ -6,7 +6,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import fixtureServereMiddleware from "../index.js";
-import globTofixtures from "../lib/glob-to-fixtures.js ";
+import globTofixtures from "../lib/glob-to-fixtures.js";
 
 import DEFAULTS from "../lib/defaults.js";
 
