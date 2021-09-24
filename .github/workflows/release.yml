@@ -7,8 +7,33 @@ name: Release
       - beta
       - v*.x
 jobs:
+  build_matrix:
+    strategy:
+      matrix:
+        os: [windows, macos, ubuntu]
+        include:
+          - os: windows
+            build: npx caxa --input . --output dist/fixtures-server-win.exe -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
+          - os: macos
+            build: npx caxa --input . --output dist/fixtures-server-macos -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
+          - os: ubuntu
+            build: npx caxa --input . --output dist/fixtures-server-linux -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: ${{ matrix.build }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-artifacts
+          path: dist
+
   release:
     name: release
+    needs: [build_matrix]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +42,12 @@ jobs:
           node-version: 16
           cache: npm
       - run: npm ci
-      - run: npx caxa --input . --output dist/fixtures-server -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
+      - uses: actions/download-artifact@v2
+        id: download
+        with:
+          name: build-artifacts
+          path: dist
+      - run: ls dist
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
