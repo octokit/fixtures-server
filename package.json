@@ -44,7 +44,7 @@
     "yargs": "^17.0.0"
   },
   "devDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.22.0",
     "caxa": "^2.1.0",
     "prettier": "^2.0.1",
     "semantic-release": "^18.0.0",
