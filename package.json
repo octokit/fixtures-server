@@ -47,7 +47,7 @@
     "axios": "^0.22.0",
     "caxa": "^2.1.0",
     "prettier": "^2.0.1",
-    "semantic-release": "^18.0.0",
+    "semantic-release": "^19.0.0",
     "supertest": "^6.0.0",
     "uvu": "^0.5.1"
   },
