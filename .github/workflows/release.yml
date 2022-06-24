@@ -20,7 +20,7 @@ jobs:
             build: npx caxa --input . --output dist/fixtures-server-linux -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: 16
@@ -36,7 +36,7 @@ jobs:
     needs: [build_matrix]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: 16
