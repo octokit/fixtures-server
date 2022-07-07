@@ -20,13 +20,13 @@ jobs:
             build: npx caxa --input . --output dist/fixtures-server-linux -- "{{caxa}}/node_modules/.bin/node" "{{caxa}}/bin/server.js"
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+      - uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # tag=v3
         with:
           node-version: 16
       - run: npm ci
       - run: ${{ matrix.build }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8 # tag=v3
         with:
           name: build-artifacts
           path: dist
@@ -36,13 +36,13 @@ jobs:
     needs: [build_matrix]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+      - uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # tag=v3
         with:
           node-version: 16
           cache: npm
       - run: npm ci
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@fb598a63ae348fa914e94cd0ff38f362e927b741 # tag=v3
         id: download
         with:
           name: build-artifacts
