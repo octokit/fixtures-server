@@ -51,7 +51,7 @@ jobs:
           node-version: 16
           cache: npm
       - run: npm ci
-      - uses: actions/download-artifact@076f0f7dd036d87e8e04f5f00d614e790308961b
+      - uses: actions/download-artifact@v3
         id: download
         with:
           name: build-artifacts
