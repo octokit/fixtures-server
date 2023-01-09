@@ -91,11 +91,11 @@ app.listen(3000);
 
 #### Options
 
-| Option        | Default                                                                                                                              | Descriptio                                                                    |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `fixturesUrl` | `'http://localhost:<port>'`                                                                                                          | URL to handle fixture requests (This helps with continuous deployments)       |
-| `logLevel`    | `'info'`                                                                                                                             | One of `'debug'`, `'info'`, `'warn'`, `'error'`, `'silent'`                   |
-| `ttl`         | `60000`                                                                                                                              | Expiration time (time to live) for loaded fixtures in ms                      |
+| Option        | Default                                                                                                                            | Descriptio                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `fixturesUrl` | `'http://localhost:<port>'`                                                                                                        | URL to handle fixture requests (This helps with continuous deployments)       |
+| `logLevel`    | `'info'`                                                                                                                           | One of `'debug'`, `'info'`, `'warn'`, `'error'`, `'silent'`                   |
+| `ttl`         | `60000`                                                                                                                            | Expiration time (time to live) for loaded fixtures in ms                      |
 | `fixtures`    | fixtures from [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/main/scenarios/api.github.com) | Object with keysbeing the scenario names and values being the fixtures arrays |
 
 ## License
