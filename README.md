@@ -2,7 +2,7 @@
 
 > Fixtures server for browser & language agnositic octokit testing
 
-[![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg?branch=master)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest+branch%3Amaster)
+[![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg?branch=main)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest+branch%3Amain)
 
 The Octokit Fixtures Server is proxies requests to the mocked routes
 provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
@@ -14,7 +14,7 @@ provided by [@octokit/fixtures](https://github.com/octokit/fixtures).
 
 ## Usage
 
-1. Load a fixture. All folder names at [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/master/scenarios/api.github.com/)
+1. Load a fixture. All folder names at [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/main/scenarios/api.github.com/)
    are valid values for `scenario`.
 
    ```
@@ -91,12 +91,12 @@ app.listen(3000);
 
 #### Options
 
-| Option        | Default                                                                                                                              | Descriptio                                                                    |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| `fixturesUrl` | `'http://localhost:<port>'`                                                                                                          | URL to handle fixture requests (This helps with continuous deployments)       |
-| `logLevel`    | `'info'`                                                                                                                             | One of `'debug'`, `'info'`, `'warn'`, `'error'`, `'silent'`                   |
-| `ttl`         | `60000`                                                                                                                              | Expiration time (time to live) for loaded fixtures in ms                      |
-| `fixtures`    | fixtures from [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/master/scenarios/api.github.com) | Object with keysbeing the scenario names and values being the fixtures arrays |
+| Option        | Default                                                                                                                            | Descriptio                                                                    |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `fixturesUrl` | `'http://localhost:<port>'`                                                                                                        | URL to handle fixture requests (This helps with continuous deployments)       |
+| `logLevel`    | `'info'`                                                                                                                           | One of `'debug'`, `'info'`, `'warn'`, `'error'`, `'silent'`                   |
+| `ttl`         | `60000`                                                                                                                            | Expiration time (time to live) for loaded fixtures in ms                      |
+| `fixtures`    | fixtures from [@octokit/fixtures/scenarios/api.github.com](https://github.com/octokit/fixtures/tree/main/scenarios/api.github.com) | Object with keysbeing the scenario names and values being the fixtures arrays |
 
 ## License
 
