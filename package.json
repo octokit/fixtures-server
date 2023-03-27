@@ -46,7 +46,7 @@
   "devDependencies": {
     "caxa": "^3.0.0",
     "prettier": "^2.0.1",
-    "semantic-release": "^20.0.0",
+    "semantic-release": "^21.0.0",
     "supertest": "^6.0.0",
     "uvu": "^0.5.1"
   },
