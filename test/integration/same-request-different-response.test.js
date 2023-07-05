@@ -18,10 +18,10 @@ test("add-and-remove-repository-collaborator (same request/different response)",
       ttl: 1000,
       fixtures: {
         "add-and-remove-repository-collaborator": getScenarioFixture(
-          "add-and-remove-repository-collaborator"
+          "add-and-remove-repository-collaborator",
         ),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -35,7 +35,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   // https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
   const addCollaboratorResponse = await agent
     .put(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -47,7 +47,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   // https://developer.github.com/v3/repos/invitations/
   const getInvitationsResponse = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -70,7 +70,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators1Response = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -81,13 +81,13 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   // listCollaborators1Response.body should be an array, but instead is an {'1': {}, '2': {}} object ¯\_(ツ)_/¯
   assert.equal(
     listCollaborators1Response.body[1].login,
-    "octokit-fixture-user-b"
+    "octokit-fixture-user-b",
   );
 
   // https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
   const removeCollaboratorResponse = await agent
     .delete(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -99,7 +99,7 @@ test("add-and-remove-repository-collaborator (same request/different response)",
   // https://developer.github.com/v3/repos/collaborators/#list-collaborators
   const listCollaborators2Response = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`,
     )
     .set({
       accept: "application/vnd.github.v3+json",

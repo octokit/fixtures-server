@@ -15,7 +15,7 @@ test("request error: no matching fixture found", async () => {
     middleware({
       logLevel: "silent",
       ttl: 1000,
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -27,7 +27,7 @@ test("request error: no matching fixture found", async () => {
     .put(
       `${
         new URL(url).pathname
-      }/repos/octokit-fixture-org/create-file/contents/test.txt`
+      }/repos/octokit-fixture-org/create-file/contents/test.txt`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
