@@ -19,7 +19,7 @@ test("get repository success", async () => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -46,7 +46,7 @@ test("get repository without Accept header", async () => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -67,7 +67,7 @@ test("get repository with invalid X-Fixtures-Id header", async () => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -92,7 +92,7 @@ test("get repository with incorrect path", async () => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -111,7 +111,7 @@ test("get repository with incorrect path", async () => {
   assert.equal(status, 404);
   assert.equal(
     body.error,
-    "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world"
+    "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world",
   );
 });
 

@@ -17,7 +17,7 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
       fixtures: {
         "release-assets": getScenarioFixture("release-assets"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -28,7 +28,7 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
     body: { upload_url: updateUrl },
   } = await agent
     .get(
-      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`
+      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -37,12 +37,12 @@ test("release asset (gr2m/octokit-rest-browser-experimental#5)", async () => {
 
   assert.equal(
     updateUrl,
-    `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
+    `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`,
   );
 
   const result = await agent
     .post(
-      `/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets`
+      `/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets`,
     )
     .query({
       name: "test-upload.txt",

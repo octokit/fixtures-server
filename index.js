@@ -39,14 +39,14 @@ function fixtureServereMiddleware(options) {
     }
 
     const mock = fixtures.mock(requestedFixture, (fixture) =>
-      additions(state, { id, fixture })
+      additions(state, { id, fixture }),
     );
 
     cachimo
       .put(id, mock, state.ttl)
       .then(() => {
         state.log.debug(
-          `Deleted fixtures "${id}" (${mock.pending().length} pending)`
+          `Deleted fixtures "${id}" (${mock.pending().length} pending)`,
         );
       })
       // throws error if key was deleted before timeout, safe to ignore

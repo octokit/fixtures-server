@@ -19,7 +19,7 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
       fixtures: {
         "rename-repository": getScenarioFixture("rename-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -54,7 +54,7 @@ test("get repository redirect (gr2m/octokit-rest-browser-experimental#6)", async
   assert.equal(getResponse.status, 301);
   assert.equal(
     getResponse.headers.location,
-    `http://localhost:3000${path}/repositories/1000`
+    `http://localhost:3000${path}/repositories/1000`,
   );
 });
 
@@ -68,7 +68,7 @@ test("get repository success (redirect with custom URL test)", async () => {
         "rename-repository": getScenarioFixture("rename-repository"),
       },
       fixturesUrl: "https://deployment123.my-mock-server.com",
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -103,7 +103,7 @@ test("get repository success (redirect with custom URL test)", async () => {
   assert.equal(getResponse.status, 301);
   assert.equal(
     getResponse.headers.location,
-    `https://deployment123.my-mock-server.com${path}/repositories/1000`
+    `https://deployment123.my-mock-server.com${path}/repositories/1000`,
   );
 });
 

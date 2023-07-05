@@ -54,7 +54,7 @@ app.use(
     logLevel: argv["log-level"],
     ttl: argv.ttl,
     fixtures: globTofixtures(argv.fixtures),
-  })
+  }),
 );
 
 app.listen(argv.port);

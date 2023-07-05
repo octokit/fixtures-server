@@ -13,7 +13,7 @@ test("create fixture success", () => {
     middleware({
       logLevel: "error",
       ttl: 1000,
-    })
+    }),
   );
 
   return supertest(app)
@@ -32,7 +32,7 @@ test("create fixture error", () => {
     middleware({
       logLevel: "error",
       ttl: 1,
-    })
+    }),
   );
 
   return supertest(app)
@@ -52,7 +52,7 @@ test("create fixture with custom url", () => {
       logLevel: "error",
       ttl: 1000,
       fixturesUrl: "https://deployment-123.my-fixtures.com",
-    })
+    }),
   );
 
   return supertest(app)
@@ -63,7 +63,7 @@ test("create fixture with custom url", () => {
       assert.ok(id);
       assert.equal(
         url,
-        `https://deployment-123.my-fixtures.com/api.github.com/${id}`
+        `https://deployment-123.my-fixtures.com/api.github.com/${id}`,
       );
     });
 });

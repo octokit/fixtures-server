@@ -19,7 +19,7 @@ test("binary response (octokit/rest.js#743)", async () => {
       fixtures: {
         "get-archive": getScenarioFixture("get-archive"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -29,7 +29,7 @@ test("binary response (octokit/rest.js#743)", async () => {
 
   const getArchiveResponse = await agent
     .get(
-      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/main`
+      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/main`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -40,7 +40,7 @@ test("binary response (octokit/rest.js#743)", async () => {
   assert.equal(getArchiveResponse.status, 302);
   assert.equal(
     getArchiveResponse.headers.location,
-    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
+    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`,
   );
 
   const { pathname } = new URL(getArchiveResponse.headers.location);
