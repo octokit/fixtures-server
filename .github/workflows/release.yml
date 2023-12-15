@@ -51,7 +51,7 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         id: download
         with:
           name: build-artifacts
