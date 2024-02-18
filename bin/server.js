@@ -5,7 +5,7 @@ import express from "express";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import fixtureServereMiddleware from "../index.js";
+import fixtureServerMiddleware from "../index.js";
 import globTofixtures from "../lib/glob-to-fixtures.js ";
 
 import DEFAULTS from "../lib/defaults.js";
@@ -48,7 +48,7 @@ app.get("/ping", (request, response) => {
   response.json({ ok: true });
 });
 app.use(
-  fixtureServereMiddleware({
+  fixtureServerMiddleware({
     port: argv.port,
     fixturesUrl: argv["fixtures-url"],
     logLevel: argv["log-level"],
