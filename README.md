@@ -91,7 +91,7 @@ app.listen(3000);
 
 #### Options
 
-| Option        | Default                                                                                                                            | Descriptio                                                                    |
+| Option        | Default                                                                                                                            | Description                                                                   |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `fixturesUrl` | `'http://localhost:<port>'`                                                                                                        | URL to handle fixture requests (This helps with continuous deployments)       |
 | `logLevel`    | `'info'`                                                                                                                           | One of `'debug'`, `'info'`, `'warn'`, `'error'`, `'silent'`                   |
