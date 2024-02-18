@@ -1,6 +1,6 @@
 # fixtures-server
 
-> Fixtures server for browser & language agnositic octokit testing
+> Fixtures server for browser & language agnostic octokit testing
 
 [![Test](https://github.com/octokit/fixtures-server/workflows/Test/badge.svg?branch=main)](https://github.com/octokit/fixtures-server/actions?query=workflow%3ATest+branch%3Amain)
 
