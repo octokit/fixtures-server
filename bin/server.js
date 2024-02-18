@@ -6,7 +6,7 @@ import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
 import fixtureServerMiddleware from "../index.js";
-import globTofixtures from "../lib/glob-to-fixtures.js ";
+import globToFixtures from "../lib/glob-to-fixtures.js ";
 
 import DEFAULTS from "../lib/defaults.js";
 
@@ -53,7 +53,7 @@ app.use(
     fixturesUrl: argv["fixtures-url"],
     logLevel: argv["log-level"],
     ttl: argv.ttl,
-    fixtures: globTofixtures(argv.fixtures),
+    fixtures: globToFixtures(argv.fixtures),
   }),
 );
 
