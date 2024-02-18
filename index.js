@@ -1,4 +1,4 @@
-export default fixtureServereMiddleware;
+export default fixtureServerMiddleware;
 
 import { URL } from "url";
 
@@ -14,7 +14,7 @@ import proxy from "./lib/proxy.js";
 
 import DEFAULTS from "./lib/defaults.js";
 
-function fixtureServereMiddleware(options) {
+function fixtureServerMiddleware(options) {
   const middleware = Router();
 
   const state = _.defaults(_.clone(options), DEFAULTS);
