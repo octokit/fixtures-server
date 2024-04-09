@@ -1,9 +1,9 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 test("conflicts test (#8)", async (t) => {
   const app = express();
@@ -14,7 +14,7 @@ test("conflicts test (#8)", async (t) => {
       fixtures: {
         "release-assets": getScenarioFixture("release-assets"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -28,21 +28,21 @@ test("conflicts test (#8)", async (t) => {
     body: { upload_url: uploadUrl },
   } = await agent
     .get(
-      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`
+      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/tags/v1.0.0`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(
+  t.equal(
     uploadUrl,
-    `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`
+    `http://localhost:3000/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets{?name,label}`,
   );
 
   const result = await agent
     .post(
-      `/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets`
+      `/uploads.github.com/${fixtureId}/repos/octokit-fixture-org/release-assets/releases/1000/assets`,
     )
     .query({
       name: "test-upload.txt",
@@ -57,7 +57,7 @@ test("conflicts test (#8)", async (t) => {
     })
     .catch((error) => console.log(error.stack));
 
-  t.is(result.body.name, "test-upload.txt");
+  t.equal(result.body.name, "test-upload.txt");
 
   t.end();
 });

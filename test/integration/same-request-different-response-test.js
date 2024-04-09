@@ -1,9 +1,9 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 // Two GET /api.github.com/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators
 // requests return different results based on order, see gr2m/octokit-rest-browser-experimental#4
@@ -15,10 +15,10 @@ test("add-and-remove-repository-collaborator (same request/different response)",
       ttl: 1000,
       fixtures: {
         "add-and-remove-repository-collaborator": getScenarioFixture(
-          "add-and-remove-repository-collaborator"
+          "add-and-remove-repository-collaborator",
         ),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -27,13 +27,13 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     .send({ scenario: "add-and-remove-repository-collaborator" })
     .catch(t.error);
 
-  t.is(fixtureResponse.status, 201, fixtureResponse.body.error);
+  t.equal(fixtureResponse.status, 201, fixtureResponse.body.error);
   const { id } = fixtureResponse.body;
 
   // https://developer.github.com/v3/repos/collaborators/#add-user-as-a-collaborator
   const addCollaboratorResponse = await agent
     .put(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -41,16 +41,16 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
+  t.equal(
     addCollaboratorResponse.status,
     201,
-    addCollaboratorResponse.body.detail || addCollaboratorResponse.body.error
+    addCollaboratorResponse.body.detail || addCollaboratorResponse.body.error,
   );
 
   // https://developer.github.com/v3/repos/invitations/
   const getInvitationsResponse = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/invitations`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -58,12 +58,12 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
+  t.equal(
     getInvitationsResponse.status,
     200,
-    getInvitationsResponse.body.detail || getInvitationsResponse.body.error
+    getInvitationsResponse.body.detail || getInvitationsResponse.body.error,
   );
-  t.is(getInvitationsResponse.body[0].id, 1000);
+  t.equal(getInvitationsResponse.body[0].id, 1000);
 
   // https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
   const acceptInvitationResponse = await agent
@@ -74,16 +74,16 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
+  t.equal(
     acceptInvitationResponse.status,
     204,
-    acceptInvitationResponse.body.detail || acceptInvitationResponse.body.error
+    acceptInvitationResponse.body.detail || acceptInvitationResponse.body.error,
   );
 
-  // https://developer.github.com/v3/repos/collaborators/#list-collaborators
-  const listCollaborators1Response = await agent
+  // https://developer.github.com/v3/repos/collaborators/#lequalt-collaborators
+  const lequaltCollaborators1Response = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -91,19 +91,22 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
-    listCollaborators1Response.status,
+  t.equal(
+    lequaltCollaborators1Response.status,
     200,
-    listCollaborators1Response.body.detail ||
-      listCollaborators1Response.body.error
+    lequaltCollaborators1Response.body.detail ||
+      lequaltCollaborators1Response.body.error,
   );
-  // listCollaborators1Response.body should be an array, but instead is an {'1': {}, '2': {}} object ¯\_(ツ)_/¯
-  t.is(listCollaborators1Response.body[1].login, "octokit-fixture-user-b");
+  // lequaltCollaborators1Response.body should be an array, but instead equal an {'1': {}, '2': {}} object ¯\_(ツ)_/¯
+  t.equal(
+    lequaltCollaborators1Response.body[1].login,
+    "octokit-fixture-user-b",
+  );
 
   // https://developer.github.com/v3/repos/collaborators/#remove-user-as-a-collaborator
   const removeCollaboratorResponse = await agent
     .delete(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators/octokit-fixture-user-b`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -111,17 +114,17 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
+  t.equal(
     removeCollaboratorResponse.status,
     204,
     removeCollaboratorResponse.body.detail ||
-      removeCollaboratorResponse.body.error
+      removeCollaboratorResponse.body.error,
   );
 
-  // https://developer.github.com/v3/repos/collaborators/#list-collaborators
-  const listCollaborators2Response = await agent
+  // https://developer.github.com/v3/repos/collaborators/#lequalt-collaborators
+  const lequaltCollaborators2Response = await agent
     .get(
-      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`
+      `/api.github.com/${id}/repos/octokit-fixture-org/add-and-remove-repository-collaborator/collaborators`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -129,13 +132,13 @@ test("add-and-remove-repository-collaborator (same request/different response)",
     })
     .catch(t.error);
 
-  t.is(
-    listCollaborators2Response.status,
+  t.equal(
+    lequaltCollaborators2Response.status,
     200,
-    listCollaborators2Response.body.detail ||
-      listCollaborators2Response.body.error
+    lequaltCollaborators2Response.body.detail ||
+      lequaltCollaborators2Response.body.error,
   );
-  t.is(listCollaborators2Response.body[1], undefined);
+  t.equal(lequaltCollaborators2Response.body[1], undefined);
 
   t.end();
 });

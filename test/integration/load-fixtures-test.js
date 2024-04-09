@@ -1,8 +1,8 @@
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const middleware = require("../..");
+import middleware from "../../index.js";
 
 test("create fixture success", (t) => {
   const app = express();
@@ -10,7 +10,7 @@ test("create fixture success", (t) => {
     middleware({
       logLevel: "error",
       ttl: 1000,
-    })
+    }),
   );
 
   supertest(app)
@@ -19,7 +19,7 @@ test("create fixture success", (t) => {
     .then((response) => {
       const { id, url } = response.body;
       t.ok(id);
-      t.is(url, `http://localhost:3000/api.github.com/${id}`);
+      t.equal(url, `http://localhost:3000/api.github.com/${id}`);
       t.end();
     })
     .catch(t.error);
@@ -31,7 +31,7 @@ test("create fixture error", (t) => {
     middleware({
       logLevel: "error",
       ttl: 1,
-    })
+    }),
   );
 
   supertest(app)
@@ -39,8 +39,8 @@ test("create fixture error", (t) => {
     .send({ scenario: "nope" })
     .catch((error) => error.response)
     .then((response) => {
-      t.is(response.status, 400);
-      t.is(response.body.error, 'Scenario "nope" not found');
+      t.equal(response.status, 400);
+      t.equal(response.body.error, 'Scenario "nope" not found');
       t.end();
     })
     .catch(t.error);
@@ -53,7 +53,7 @@ test("create fixture with custom url", (t) => {
       logLevel: "error",
       ttl: 1000,
       fixturesUrl: "https://deployment-123.my-fixtures.com",
-    })
+    }),
   );
 
   supertest(app)
@@ -62,7 +62,10 @@ test("create fixture with custom url", (t) => {
     .then((response) => {
       const { id, url } = response.body;
       t.ok(id);
-      t.is(url, `https://deployment-123.my-fixtures.com/api.github.com/${id}`);
+      t.equal(
+        url,
+        `https://deployment-123.my-fixtures.com/api.github.com/${id}`,
+      );
       t.end();
     })
     .catch(t.error);

@@ -1,11 +1,9 @@
-const { URL } = require("url");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
-
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 test("binary response (octokit/rest.js#743)", async (t) => {
   const app = express();
@@ -16,7 +14,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
       fixtures: {
         "get-archive": getScenarioFixture("get-archive"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -26,7 +24,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
 
   const getArchiveResponse = await agent
     .get(
-      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/main`
+      `/api.github.com/${fixtureId}/repos/octokit-fixture-org/get-archive/tarball/main`,
     )
     .set({
       accept: "application/vnd.github.v3+json",
@@ -34,10 +32,10 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(getArchiveResponse.status, 302);
-  t.is(
+  t.equal(getArchiveResponse.status, 302);
+  t.equal(
     getArchiveResponse.headers.location,
-    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`
+    `http://localhost:3000/codeload.github.com/${fixtureId}/octokit-fixture-org/get-archive/legacy.tar.gz/refs/heads/main`,
   );
 
   const { pathname } = new URL(getArchiveResponse.headers.location);
@@ -47,7 +45,7 @@ test("binary response (octokit/rest.js#743)", async (t) => {
     authorization: "token 0000000000000000000000000000000000000001",
   });
 
-  t.is(status, 200);
+  t.equal(status, 200);
 
   t.end();
 });

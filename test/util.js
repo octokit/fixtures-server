@@ -1,7 +1,5 @@
-module.exports = {
-  getScenarioFixture,
-};
+import fixtures from "@octokit/fixtures";
 
-function getScenarioFixture(name) {
-  return require(`@octokit/fixtures/scenarios/api.github.com/${name}/normalized-fixture.json`);
+export function getScenarioFixture(name) {
+  return fixtures.get(`api.github.com/${name}`);
 }

@@ -1,15 +1,19 @@
-const proxyquire = require("proxyquire").noCallThru();
-const { test } = require("tap");
+import t from "tap";
 
-test("globToFixture globbing JSON file != normalized-fixture.json", (t) => {
-  const globToFixture = proxyquire("../../lib/glob-to-fixtures", {
-    glob: {
-      sync: () => ["/foo/bar.json"],
-    },
-    "/foo/bar.json": "baz",
-  });
-  const fixtures = globToFixture();
-  t.deepEqual(fixtures, { bar: "baz" });
+t.test(
+  "globToFixture globbing JSON file != normalized-fixture.json",
+  async (t) => {
+    const globToFixture = await t.mockImport("../../lib/glob-to-fixtures.js", {
+      glob: {
+        glob: { sync: () => ["/foo/bar.json"] },
+      },
+      "node:fs": {
+        readFileSync: () => JSON.stringify({ bar: "baz" }),
+      },
+    });
+    const fixtures = (await import("../../lib/glob-to-fixtures.js"))();
+    t.deepEqual(fixtures, { bar: "baz" });
 
-  t.end();
-});
+    t.end();
+  },
+);

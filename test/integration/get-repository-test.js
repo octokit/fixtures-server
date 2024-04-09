@@ -1,11 +1,9 @@
-const { URL } = require("url");
+import express from "express";
+import supertest from "supertest";
+import { test } from "tap";
 
-const express = require("express");
-const supertest = require("supertest");
-const { test } = require("tap");
-
-const { getScenarioFixture } = require("../util");
-const middleware = require("../..");
+import { getScenarioFixture } from "../util.js";
+import middleware from "../../index.js";
 
 test("get repository success", async (t) => {
   const app = express();
@@ -16,7 +14,7 @@ test("get repository success", async (t) => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -31,7 +29,7 @@ test("get repository success", async (t) => {
       authorization: "token 0000000000000000000000000000000000000001",
     });
 
-  t.is(body.name, "hello-world");
+  t.equal(body.name, "hello-world");
   t.end();
 });
 
@@ -44,7 +42,7 @@ test("get repository without Accept header", async (t) => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -52,8 +50,8 @@ test("get repository without Accept header", async (t) => {
     .get("/api.github.com/fixturesid123/repos/octokit-fixture-org/hello-world")
     .catch((error) => error.response);
 
-  t.is(status, 400);
-  t.is(body.error, "Accept header required");
+  t.equal(status, 400);
+  t.equal(body.error, "Accept header required");
   t.end();
 });
 
@@ -66,7 +64,7 @@ test("get repository with invalid X-Fixtures-Id header", async (t) => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -78,8 +76,8 @@ test("get repository with invalid X-Fixtures-Id header", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(body.error, 'Fixture "fixturesid123" not found');
+  t.equal(status, 404);
+  t.equal(body.error, 'Fixture "fixturesid123" not found');
   t.end();
 });
 
@@ -92,7 +90,7 @@ test("get repository with incorrect path", async (t) => {
       fixtures: {
         "get-repository": getScenarioFixture("get-repository"),
       },
-    })
+    }),
   );
 
   const agent = supertest(app);
@@ -108,10 +106,10 @@ test("get repository with incorrect path", async (t) => {
     })
     .catch((error) => error.response);
 
-  t.is(status, 404);
-  t.is(
+  t.equal(status, 404);
+  t.equal(
     body.error,
-    "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world"
+    "GET /foo does not match next fixture: GET /repos/octokit-fixture-org/hello-world",
   );
   t.end();
 });

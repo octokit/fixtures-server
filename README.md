@@ -83,7 +83,7 @@ app.use(
     fixtures: {
       "my-scenario": require("./scenarios/my-scenario.json"),
     },
-  })
+  }),
 );
 
 app.listen(3000);

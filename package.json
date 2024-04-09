@@ -4,8 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "type": "module",
   "description": "Fixtures server for browser & language agnositic octokit testing",
-  "main": "index.js",
   "bin": {
     "octokit-fixtures-server": "bin/server.js"
   },
@@ -20,7 +20,7 @@
     "lint": "prettier --check '{bin,lib,scripts,test}/**/*.{js,json}' index.js README.md package.json",
     "lint:fix": "prettier --write '{bin,lib,scripts,test}/**/*.{js,json}' index.js README.md package.json",
     "pretest": "npm run -s lint",
-    "test": "tap --100 --coverage 'test/**/*-test.js'",
+    "test": "tap 'test/**/*-test.js'",
     "test:e2e": "npm run test:e2e:smoke && npm run test:e2e:custom-fixtures",
     "test:e2e:smoke": "test/end-to-end/smoke-test.sh",
     "test:e2e:custom-fixtures": "test/end-to-end/custom-fixtures-test.sh"
@@ -34,20 +34,19 @@
     "cachimo": "^2.0.1",
     "console-log-level": "^1.4.0",
     "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "glob": "^7.1.2",
-    "http-proxy-middleware": "^2.0.0",
+    "express": "^4.19.2",
+    "glob": "^10.3.12",
+    "http-proxy-middleware": "^3.0.0",
     "lodash": "^4.17.10",
     "yargs": "^17.0.0"
   },
   "devDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^1.6.8",
     "pkg": "^5.0.0",
-    "prettier": "^2.0.1",
-    "proxyquire": "^2.0.0",
-    "semantic-release": "^17.2.1",
-    "supertest": "^6.0.0",
-    "tap": "^15.0.0"
+    "prettier": "^3.2.5",
+    "semantic-release": "^23.0.0",
+    "supertest": "^6.3.4",
+    "tap": "^18.7.2"
   },
   "release": {
     "plugins": [
