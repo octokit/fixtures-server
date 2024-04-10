@@ -1,5 +1,3 @@
-import { URL } from "url";
-
 import express from "express";
 import supertest from "supertest";
 import { suite } from "uvu";
