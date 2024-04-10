@@ -33,6 +33,7 @@ test("binary response (octokit/rest.js#743)", async () => {
     )
     .set({
       accept: "application/vnd.github.v3+json",
+      "accept-encoding": "gzip, compress, deflate, br",
       authorization: "token 0000000000000000000000000000000000000001",
     })
     .catch((error) => error.response);
@@ -47,6 +48,7 @@ test("binary response (octokit/rest.js#743)", async () => {
 
   const { status } = await agent.get(pathname).set({
     accept: "application/vnd.github.v3+json",
+    "accept-encoding": "gzip, compress, deflate, br",
     authorization: "token 0000000000000000000000000000000000000001",
   });
 
