@@ -81,5 +81,8 @@
     "env": {
       "NODE_ENV": "production"
     }
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
