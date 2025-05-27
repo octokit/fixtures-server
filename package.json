@@ -39,7 +39,7 @@
     "console-log-level": "^1.4.0",
     "cors": "^2.8.4",
     "express": "^5.0.0",
-    "http-proxy-middleware": "^2.0.0",
+    "http-proxy-middleware": "^3.0.0",
     "tinyglobby": "^0.2.14",
     "yargs": "^17.0.0"
   },
