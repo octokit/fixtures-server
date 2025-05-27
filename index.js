@@ -1,6 +1,5 @@
 export default fixtureServerMiddleware;
 
-import _ from "lodash";
 import bodyParser from "body-parser";
 import cachimo from "cachimo";
 import { Router } from "express";
@@ -15,7 +14,7 @@ import DEFAULTS from "./lib/defaults.js";
 function fixtureServerMiddleware(options) {
   const middleware = Router();
 
-  const state = _.defaults(_.clone(options), DEFAULTS);
+  const state = Object.assign({}, DEFAULTS, options);
 
   if (!state.fixturesUrl) {
     state.fixturesUrl = `http://localhost:${state.port}`;
@@ -58,15 +57,13 @@ function fixtureServerMiddleware(options) {
   });
 
   // load proxies for all unique scope URLs in fixtures
-  _.chain(state.fixtures)
-    .values()
-    .flatten()
-    .map("scope")
-    .uniq()
-    // remove default ports for http / https, they cause problems for the proxy
-    .map((url) => url.replace(/:(80|443)$/, ""))
-    .forEach((target) => middleware.use(proxy(state, { target })))
-    .value();
+  Object.values(state.fixtures)
+    .flat()
+    .map((fixture) => fixture.scope.replace(/:(80|443)$/, ""))
+    .filter((url, i, arr) => arr.indexOf(url) === i)
+    .forEach((target) => {
+      middleware.use(proxy(state, { target }));
+    });
 
   return middleware;
 }
