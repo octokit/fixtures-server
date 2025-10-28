@@ -42,7 +42,7 @@ jobs:
           node-version: lts/*
       - run: npm ci
       - run: ${{ matrix.build }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: build-artifacts-${{ matrix.os }}
           path: dist
@@ -58,7 +58,7 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         id: download
         with:
           pattern: build-artifacts-*
