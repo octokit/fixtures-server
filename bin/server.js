@@ -43,7 +43,9 @@ const { argv } = yargs(hideBin(process.argv))
   .help();
 
 const app = express();
-app.use(cors());
+// Restrict CORS to an explicitly allow-listed origin (via CORS_ORIGIN env var).
+// Defaults to disabling cross-origin access rather than allowing any origin.
+app.use(cors({ origin: process.env.CORS_ORIGIN || false }));
 app.get("/ping", (request, response) => {
   response.json({ ok: true });
 });
